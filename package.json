@@ -13,6 +13,7 @@
   "dependencies": {
     "node-sass": "^4.14.1"
   },
+  "homepage": "https://joseluismurillorios.github.io/react-simple-datetime/",
   "repository": "https://github.com/joseluismurillorios/react-simple-datetime.git",
   "devDependencies": {
     "@babel/core": "7.6.0",
