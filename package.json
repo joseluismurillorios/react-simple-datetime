@@ -12,6 +12,7 @@
   "dependencies": {
     "node-sass": "^4.14.1"
   },
+  "repository": "https://github.com/joseluismurillorios/react-simple-datetime.git",
   "devDependencies": {
     "@babel/core": "7.6.0",
     "@svgr/webpack": "4.3.2",
