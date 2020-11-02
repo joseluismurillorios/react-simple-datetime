@@ -11,7 +11,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "node-sass": "^4.14.1"
+    "@types/jest": "^26.0.15",
+    "@types/node": "^14.14.6",
+    "@types/react": "^16.9.55",
+    "@types/react-dom": "^16.9.9",
+    "node-sass": "^4.14.1",
+    "typescript": "^4.0.5"
   },
   "homepage": "https://joseluismurillorios.github.io/react-simple-datetime/",
   "repository": "https://github.com/joseluismurillorios/react-simple-datetime.git",

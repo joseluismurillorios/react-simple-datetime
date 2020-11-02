@@ -117,7 +117,6 @@ const HourPicker = ({
           setEdit={setEdit}
           isAM={am}
           setAm={setAm}
-          ampm={am ? 'AM' : 'PM'}
         />
         <div className="dial__picker--wrapper">
           <svg ref={svgRef} className="dial__picker--container" viewBox="0 0 300 300">
