@@ -1,0 +1,29 @@
+export const timeToDeg = (val, clamp = 12) => {
+  const offset = 360 / clamp;
+  const value = val % clamp;
+  return {
+    degrees: (value * offset) - 90,
+    value,
+  };
+};
+
+export const getRotation = (elem, x, y, round = 30, pad = 3) => {
+  const rect = elem.getBoundingClientRect();
+  const centerX = rect.x + rect.width / 2;
+  const centerY = rect.y + rect.height / 2;
+  const diffX = x - centerX;
+  const diffY = y - centerY;
+
+  let angle = Math.atan2(diffY, diffX);
+  if (angle < 0) { angle += 2 * Math.PI; }
+  const degrees = (angle * 180) / Math.PI;
+
+  const rounded = Math.round(degrees / round) * round;
+
+  let value = pad + rounded / round;
+  if (value >= pad * 4) { value -= pad * 4; }
+  return {
+    degrees: rounded,
+    value,
+  };
+};

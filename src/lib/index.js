@@ -1,8 +1,7 @@
-import Example from './components/Example';
-import SecondExample from './components/SecondExample';
+import HourPicker from './components/hour-picker';
 
-export default Example;
+export default HourPicker;
 
 export {
-  SecondExample,
+  HourPicker,
 };
