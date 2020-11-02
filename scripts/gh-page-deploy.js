@@ -6,7 +6,7 @@ const fs = require('fs');
   try {
     await execa('git', ['checkout', '--orphan', 'gh-pages']);
     console.log('Building...');
-    await execa('npm', ['run', 'build']);
+    await execa('npm', ['run', 'demo']);
     // Understand if it's demo or build folder
     const folderName = fs.existsSync('demo') ? 'demo' : 'build';
     await execa('git', ['--work-tree', folderName, 'add', '--all']);
