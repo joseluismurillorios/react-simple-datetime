@@ -3,13 +3,13 @@ import React, {
 } from 'react';
 import PropTypes from 'prop-types';
 
-// import AmPm from './ampm';
-import Display from './display';
-import Selector from './selector';
 import Controls from './controls';
+import Display from './display';
 import Nums from './nums';
+import Selector from './selector';
 
 import { timeToDeg, getRotation } from './utils';
+
 import './style.scss';
 // import './theme.scss';
 
@@ -134,7 +134,6 @@ const HourPicker = ({
               />
             </g>
           </svg>
-          {/* <AmPm setAm={setAm} isAM={am} /> */}
         </div>
       </div>
       {
