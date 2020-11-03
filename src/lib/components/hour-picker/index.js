@@ -4,12 +4,14 @@ import React, {
   useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
+import { CSSTransition } from 'react-transition-group';
 
 import Controls from './controls';
 import Display from './display';
 import Dial from './dial';
 
-import { EDIT_HOURS } from './constants';
+import { EDIT_HOURS, EDIT_MINUTES, FADE_MILLI } from './constants';
+import './transitions.scss';
 import './style.scss';
 // import './theme.scss';
 
@@ -86,17 +88,65 @@ const HourPicker = ({
           setAm={onAmPmChange}
           ampm={am ? 'AM' : 'PM'}
         />
-        {
+        <div className="dial__picker--wrapper">
+          <CSSTransition
+            in={edit === EDIT_HOURS}
+            timeout={FADE_MILLI}
+            classNames="transition-fade"
+            unmountOnExit
+            mountOnEnter
+          >
+            <Dial
+              hour={hours}
+              onChange={onHourChange}
+              round={30}
+              pad={3}
+              adder={1}
+              clamp={12}
+            />
+          </CSSTransition>
+          <CSSTransition
+            in={edit === EDIT_MINUTES}
+            timeout={FADE_MILLI}
+            classNames="transition-fade"
+            unmountOnExit
+            mountOnEnter
+          >
+            <Dial
+              hour={minutes}
+              onChange={onMinuteChange}
+              round={6}
+              pad={15}
+              adder={5}
+              clamp={60}
+            />
+          </CSSTransition>
+        </div>
+        {/* {
           edit === EDIT_HOURS
             ? (
-              <Dial
-                hour={hours}
-                onChange={onHourChange}
-                round={30}
-                pad={3}
-                adder={1}
-                clamp={12}
-              />
+              <CSSTransition
+                in={show}
+                timeout={timeout}
+                classNames={`app__menu-${direction}`}
+                unmountOnExit={unmountOnExit}
+                mountOnEnter
+                onEnter={(el) => {
+                  setTimeout(() => {
+                    const { height } = el.getBoundingClientRect();
+                    onEnter(height);
+                  }, 200);
+                }}
+              >
+                <Dial
+                  hour={hours}
+                  onChange={onHourChange}
+                  round={30}
+                  pad={3}
+                  adder={1}
+                  clamp={12}
+                />
+              </CSSTransition>
             )
             : (
               <Dial
@@ -108,7 +158,7 @@ const HourPicker = ({
                 clamp={60}
               />
             )
-        }
+        } */}
       </div>
       {
         controls && (

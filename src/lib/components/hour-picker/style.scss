@@ -29,7 +29,7 @@ $color-600: #3949AB;
 
   &--container {
     --picker-value: 0;
-    width: 100%;
+    margin: 30px;
   }
 
   &--display {
@@ -126,12 +126,11 @@ $color-600: #3949AB;
     fill: #D8D8D8;
   }
 
-  &--wrapper {
-    padding: 30px;
-  
-    max-width: 300px;
+  &--wrapper {  
+    max-width: 320px;
     margin: 0 auto;
     flex: 2;
+    position: relative;
   }
 
   &--selector {

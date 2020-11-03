@@ -54,22 +54,20 @@ const Dial = ({
 
   const degrees = hourToDeg(hour, clamp);
   return (
-    <div className="dial__picker--wrapper">
-      <svg ref={svgRef} className="dial__picker--container" viewBox="0 0 300 300">
-        <g className="clock">
-          <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
+    <svg ref={svgRef} className="dial__picker--container" viewBox="0 0 300 300">
+      <g className="clock">
+        <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
 
-          <Selector degrees={degrees} radius={radius} />
+        <Selector degrees={degrees} radius={radius} />
 
-          <Nums
-            num={divisions}
-            radius={radius}
-            adder={adder}
-            onNumTap={onSet}
-          />
-        </g>
-      </svg>
-    </div>
+        <Nums
+          num={divisions}
+          radius={radius}
+          adder={adder}
+          onNumTap={onSet}
+        />
+      </g>
+    </svg>
   )
 }
 
