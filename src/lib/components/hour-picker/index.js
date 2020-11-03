@@ -1,5 +1,6 @@
 import React, {
   useCallback,
+  useEffect,
   useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
@@ -16,26 +17,56 @@ const HourPicker = ({
   id = Date.now().toString(16),
   value = new Date(),
   onChange,
+  onConfirm,
   controls,
 }) => {
   const initialValue = useRef(value);
 
-  const [hours, setHrs] = useState(value.getHours());
+  const [hours, setHrs] = useState(value.getHours() % 12);
   const [minutes, setMin] = useState(value.getMinutes());
   const [edit, setEdit] = useState(EDIT_HOURS);
 
   const [am, setAm] = useState(value.getHours() < 12);
 
   const onHourChange = useCallback((val) => {
-    console.log('am', am);
     if (am) {
       setHrs(val % 12);
     } else {
       setHrs(val === 0 ? 12 : val);
     }
-  }, [am])
+  }, [am]);
 
-  console.log('ama', am);
+  const onMinuteChange = useCallback((val) => {
+    setMin(val);
+  }, []);
+
+  const onAmPmChange = useCallback((val) => {
+    setAm(val);
+    if (val && hours === 12) {
+      setHrs(0);
+    } else if (!val && hours === 0) {
+      setHrs(12);
+    }
+  }, [hours]);
+
+  const onFinish = () => {
+    onConfirm({
+      name: id,
+      value: initialValue.current,
+    });
+  }
+
+  useEffect(() => {
+    const adder = am ? 0 : 12;
+    initialValue.current.setHours((hours % 12) + adder, minutes, 0, 0);
+    if (onChange && typeof onChange === 'function') {
+      onChange({
+        name: id,
+        value: initialValue.current,
+      });
+    }
+  }, [id, am, hours, minutes, onChange]);
+
   return (
     <div className="dial__picker">
       <div className="dial__picker--main">
@@ -45,7 +76,7 @@ const HourPicker = ({
           edit={edit}
           setEdit={setEdit}
           isAM={am}
-          setAm={setAm}
+          setAm={onAmPmChange}
           ampm={am ? 'AM' : 'PM'}
         />
         {
@@ -63,10 +94,7 @@ const HourPicker = ({
             : (
               <Dial
                 hour={minutes}
-                onChange={(val) => {
-                  console.log(val)
-                  setMin(val);
-                }}
+                onChange={onMinuteChange}
                 round={6}
                 pad={15}
                 adder={5}
@@ -78,7 +106,7 @@ const HourPicker = ({
       {
         controls && (
           <Controls
-            // onConfirm={onUpdate}
+            onConfirm={onFinish}
           />
         )
       }
@@ -89,7 +117,8 @@ const HourPicker = ({
 HourPicker.defaultProps = {
   id: '',
   value: undefined,
-  onChange: () => {},
+  onChange: undefined,
+  onConfirm: () => {},
   controls: false,
 };
 
@@ -97,6 +126,7 @@ HourPicker.propTypes = {
   id: PropTypes.string,
   value: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
+  onConfirm: PropTypes.func,
   controls: PropTypes.bool,
 };
 
