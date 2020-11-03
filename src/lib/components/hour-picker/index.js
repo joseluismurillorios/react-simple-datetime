@@ -21,6 +21,7 @@ const HourPicker = ({
   controls,
 }) => {
   const initialValue = useRef(value);
+  const onChangeRef = useRef(onChange);
 
   const [hours, setHrs] = useState(value.getHours() % 12);
   const [minutes, setMin] = useState(value.getMinutes());
@@ -59,13 +60,17 @@ const HourPicker = ({
   useEffect(() => {
     const adder = am ? 0 : 12;
     initialValue.current.setHours((hours % 12) + adder, minutes, 0, 0);
-    if (onChange && typeof onChange === 'function') {
-      onChange({
+    if (onChangeRef.current && typeof onChangeRef.current === 'function') {
+      onChangeRef.current({
         name: id,
         value: initialValue.current,
       });
     }
-  }, [id, am, hours, minutes, onChange]);
+  }, [id, am, hours, minutes]);
+
+  useEffect(() => {
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   return (
     <div className="dial__picker">
