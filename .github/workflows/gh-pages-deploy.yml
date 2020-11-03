@@ -19,6 +19,8 @@
           uses: Jaid/action-npm-install@v1.2.4
 
         - name: Run deploy script
+          env:
+            USERMAIL: ${{ secrets.USERMAIL }}
           run: |
-            git config user.name "Jose Murillo" && git config user.email "joseluismurillorios@gmail.com"
+            git config user.name "Jose Murillo" && git config user.email "$USERMAIL"
             npm run gh-pages-deploy
