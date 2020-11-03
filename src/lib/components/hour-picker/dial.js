@@ -1,7 +1,9 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+
 import Selector from './selector';
 import Nums from './nums';
+
 import { DIVISIONS, RADIUS } from './constants';
 import { getRotation, hourToDeg } from './utils';
 

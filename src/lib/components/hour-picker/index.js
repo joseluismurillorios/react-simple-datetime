@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 
 import Controls from './controls';
 import Display from './display';
-
-import './style.scss';
 import Dial from './dial';
+
 import { EDIT_HOURS } from './constants';
+import './style.scss';
 // import './theme.scss';
 
 const HourPicker = ({
