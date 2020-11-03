@@ -52,6 +52,7 @@ const HourPicker = ({
   }, [hours]);
 
   const onFinish = () => {
+    console.log('onFinish', initialValue.current.toLocaleTimeString());
     onConfirm({
       name: id,
       value: initialValue.current,
