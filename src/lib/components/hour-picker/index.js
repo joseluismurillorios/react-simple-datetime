@@ -1,145 +1,120 @@
 import React, {
-  useCallback, useEffect, useRef, useState,
+  useCallback,
+  useEffect,
+  useRef, useState,
 } from 'react';
 import PropTypes from 'prop-types';
 
 import Controls from './controls';
 import Display from './display';
-import Nums from './nums';
-import Selector from './selector';
+import Dial from './dial';
 
-import { timeToDeg, getRotation } from './utils';
-
+import { EDIT_HOURS } from './constants';
 import './style.scss';
 // import './theme.scss';
 
-const num = 12;
-const radius = 120;
-
 const HourPicker = ({
-  id,
+  id = Date.now().toString(16),
   value = new Date(),
   onChange,
+  onConfirm,
+  onCancel,
   controls,
 }) => {
-  const svgRef = useRef(null);
   const initialValue = useRef(value);
+  const onChangeRef = useRef(onChange);
 
-  const [hours, setHrs] = useState(timeToDeg(value.getHours()));
-  const [minutes, setMin] = useState(timeToDeg(value.getMinutes(), 60));
-  const [edit, setEdit] = useState('hrs');
+  const [hours, setHrs] = useState(value.getHours() % 12);
+  const [minutes, setMin] = useState(value.getMinutes());
+  const [edit, setEdit] = useState(EDIT_HOURS);
 
   const [am, setAm] = useState(value.getHours() < 12);
 
-  const onConfirm = useCallback(() => {
-    const adder = am ? 0 : 12;
-    initialValue.current.setHours(hours.value + adder, minutes.value, 0, 0);
-    console.log('onConfirm', initialValue.current.toLocaleTimeString());
-    onChange({
+  const onHourChange = useCallback((val) => {
+    if (am) {
+      setHrs(val % 12);
+    } else {
+      setHrs(val === 0 ? 12 : val);
+    }
+  }, [am]);
+
+  const onMinuteChange = useCallback((val) => {
+    setMin(val);
+  }, []);
+
+  const onAmPmChange = useCallback((val) => {
+    setAm(val);
+    if (val && hours === 12) {
+      setHrs(0);
+    } else if (!val && hours === 0) {
+      setHrs(12);
+    }
+  }, [hours]);
+
+  const onFinish = () => {
+    console.log('onFinish', initialValue.current.toLocaleTimeString());
+    onConfirm({
       name: id,
       value: initialValue.current,
     });
-  }, [am, hours.value, id, minutes.value, onChange]);
-
-  const onNumTap = (val) => {
-    if (edit === 'hrs') {
-      setHrs(timeToDeg(val));
-    } else {
-      setMin(timeToDeg(val, 60));
-    }
-  };
-
-  const onSetValue = (deg, val, edits) => {
-    if (edits === 'hrs') {
-      setHrs({
-        degrees: deg,
-        value: Math.floor(val),
-      });
-    } else {
-      setMin({
-        degrees: deg,
-        value: val,
-      });
-    }
-  };
-
-  const onMove = useCallback((e) => {
-    const steps = edit === 'hrs' ? 30 : 6;
-    const offsets = edit === 'hrs' ? 3 : 15;
-    const {
-      degrees,
-      value: val,
-    } = getRotation(svgRef.current, e.clientX, e.clientY, steps, offsets);
-    onSetValue(degrees, val, edit);
-  }, [edit]);
-
-  const onDown = useCallback((e) => {
-    const {
-      degrees,
-      value: val,
-    } = getRotation(svgRef.current, e.clientX, e.clientY, 30, 3);
-    const clamped = edit === 'hrs' ? 1 : 5;
-    onSetValue(degrees, val * clamped, edit);
-    svgRef.current.addEventListener('mousemove', onMove);
-  }, [onMove, edit]);
-
-  const onUp = useCallback(() => {
-    svgRef.current.removeEventListener('mousemove', onMove);
-    onConfirm();
-    setTimeout(() => {
-      setEdit('min');
-    }, 200);
-  }, [onMove, onConfirm]);
+  }
 
   useEffect(() => {
-    svgRef.current.addEventListener('mouseup', onUp);
-    svgRef.current.addEventListener('mousedown', onDown);
-    const curRef = svgRef.current;
-    return () => {
-      curRef.removeEventListener('mouseup', onUp);
-      curRef.removeEventListener('mousedown', onDown);
-    };
-  }, [onDown, onUp]);
+    const adder = am ? 0 : 12;
+    initialValue.current.setHours((hours % 12) + adder, minutes, 0, 0);
+    if (onChangeRef.current && typeof onChangeRef.current === 'function') {
+      onChangeRef.current({
+        name: id,
+        value: initialValue.current,
+      });
+    }
+  }, [id, am, hours, minutes]);
 
   useEffect(() => {
-    if (initialValue.current) {
-      onConfirm();
-    }
-  }, [am, onConfirm]);
+    onChangeRef.current = onChange;
+  }, [onChange]);
 
   return (
     <div className="dial__picker">
       <div className="dial__picker--main">
         <Display
-          hours={hours.value}
-          minutes={minutes.value}
+          hours={hours}
+          minutes={minutes}
           edit={edit}
           setEdit={setEdit}
           isAM={am}
-          setAm={setAm}
+          setAm={onAmPmChange}
           ampm={am ? 'AM' : 'PM'}
         />
-        <div className="dial__picker--wrapper">
-          <svg ref={svgRef} className="dial__picker--container" viewBox="0 0 300 300">
-            <g className="clock">
-              <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
-
-              <Selector degrees={edit === 'hrs' ? hours.degrees : minutes.degrees} radius={radius} />
-
-              <Nums
-                num={num}
-                radius={radius}
-                edit={edit}
-                onNumTap={onNumTap}
+        {
+          edit === EDIT_HOURS
+            ? (
+              <Dial
+                hour={hours}
+                onChange={onHourChange}
+                round={30}
+                pad={3}
+                adder={1}
+                clamp={12}
               />
-            </g>
-          </svg>
-        </div>
+            )
+            : (
+              <Dial
+                hour={minutes}
+                onChange={onMinuteChange}
+                round={6}
+                pad={15}
+                adder={5}
+                clamp={60}
+              />
+            )
+        }
       </div>
       {
         controls && (
           <Controls
-            onConfirm={onConfirm}
+            onConfirm={onFinish}
+            onCancel={onCancel}
           />
         )
       }
@@ -148,15 +123,20 @@ const HourPicker = ({
 };
 
 HourPicker.defaultProps = {
+  id: '',
   value: undefined,
-  onChange: () => {},
+  onChange: undefined,
+  onConfirm: () => {},
+  onCancel: () => {},
   controls: false,
 };
 
 HourPicker.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   value: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
+  onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
   controls: PropTypes.bool,
 };
 

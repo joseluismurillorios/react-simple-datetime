@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 const Nums = ({
   num,
   radius,
-  edit,
   onNumTap,
+  adder,
 }) => {
   const uid = useRef(Date.now().toString(36)).current;
   const step = (2 * Math.PI) / num;
   const offset = 12;
-  const adder = edit === 'hrs' ? 1 : 5;
 
   return (
     Array.from({ length: num }, (_, i) => {

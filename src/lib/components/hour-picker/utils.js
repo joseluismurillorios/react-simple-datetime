@@ -1,10 +1,16 @@
-export const timeToDeg = (val, clamp = 12) => {
+export const timeToDeg = (val, clamp = 12, adder = 0) => {
   const offset = 360 / clamp;
-  const value = val % clamp;
+  const value = (val % clamp) + adder;
   return {
     degrees: (value * offset) - 90,
     value,
   };
+};
+
+export const hourToDeg = (val, clamp = 12, adder = 0) => {
+  const offset = 360 / clamp;
+  const value = (val % clamp) + adder;
+  return (value * offset) - 90;
 };
 
 export const getRotation = (elem, x, y, round = 30, pad = 3) => {
