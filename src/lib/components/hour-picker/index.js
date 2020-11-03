@@ -18,6 +18,7 @@ const HourPicker = ({
   value = new Date(),
   onChange,
   onConfirm,
+  onCancel,
   controls,
 }) => {
   const initialValue = useRef(value);
@@ -112,6 +113,7 @@ const HourPicker = ({
         controls && (
           <Controls
             onConfirm={onFinish}
+            onCancel={onCancel}
           />
         )
       }
@@ -124,6 +126,7 @@ HourPicker.defaultProps = {
   value: undefined,
   onChange: undefined,
   onConfirm: () => {},
+  onCancel: () => {},
   controls: false,
 };
 
@@ -132,6 +135,7 @@ HourPicker.propTypes = {
   value: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
   onConfirm: PropTypes.func,
+  onCancel: PropTypes.func,
   controls: PropTypes.bool,
 };
 
