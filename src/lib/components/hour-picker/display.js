@@ -24,28 +24,28 @@ const Display = ({
   const hrsClass = edit === 'hrs' ? 'active' : '';
   const minClass = edit === 'min' ? 'active' : '';
   return (
-    <div className="dial__picker--display">
-      <div className="dial__picker--display-values">
+    <div className="hour__picker--display">
+      <div className="hour__picker--display-values">
         <button
           type="button"
-          className={`dial__picker--display-value hours ${hrsClass}`}
+          className={`hour__picker--display-value hours ${hrsClass}`}
           onClick={onClickHour}
         >
           {String(hours).padStart(2, '0')}
         </button>
-        <div className="dial__picker--display-middle">:</div>
+        <div className="hour__picker--display-middle">:</div>
         <button
           type="button"
-          className={`dial__picker--display-value minutes ${minClass}`}
+          className={`hour__picker--display-value minutes ${minClass}`}
           onClick={onClickMinute}
         >
           {String(minutes).padStart(2, '0')}
         </button>
-        <div className="dial__picker--display-ampm">
-          <button type="button" onClick={onAM} className={`dial__picker--ampm-am ${isAM ? 'active' : ''}`}>
+        <div className="hour__picker--display-ampm">
+          <button type="button" onClick={onAM} className={`hour__picker--ampm-am ${isAM ? 'active' : ''}`}>
             <span>AM</span>
           </button>
-          <button type="button" onClick={onPM} className={`dial__picker--ampm-pm ${isAM ? '' : 'active'}`}>
+          <button type="button" onClick={onPM} className={`hour__picker--ampm-pm ${isAM ? '' : 'active'}`}>
             <span>PM</span>
           </button>
         </div>

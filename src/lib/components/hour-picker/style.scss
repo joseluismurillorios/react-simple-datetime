@@ -7,7 +7,7 @@ $color-300: #7986CB;
 $color-500: #3F51B5;
 $color-600: #3949AB;
 
-.dial__picker {
+.hour__picker {
   background-color: #EEEEEE;
   background-color: $color-50;
   max-width: 768px;
@@ -33,8 +33,12 @@ $color-600: #3949AB;
   }
 
   &--wrapper {  
+    // height: 300px;
+    // flex: 0 0 300px;
     height: 300px;
-    flex: 0 0 300px;
+    min-height: 300px;
+    flex: 1;
+
     margin: 0 auto;
     position: relative;
   }
@@ -195,7 +199,7 @@ $color-600: #3949AB;
 
 
 @media (max-width: 768px) {
-  .dial__picker--main {
+  .hour__picker--main {
     flex-direction: column;
   }
 }

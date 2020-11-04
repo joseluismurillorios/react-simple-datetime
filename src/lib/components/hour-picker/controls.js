@@ -5,17 +5,17 @@ const Controls = ({
   onConfirm,
   onCancel,
 }) => (
-  <div className="dial__picker--controls">
+  <div className="hour__picker--controls">
     <button
       type="button"
-      className="dial__picker--controls-control"
+      className="hour__picker--controls-control"
       onClick={onCancel}
     >
       Cancel
     </button>
     <button
       type="button"
-      className="dial__picker--controls-control"
+      className="hour__picker--controls-control"
       onClick={onConfirm}
     >
       OK
