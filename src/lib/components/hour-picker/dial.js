@@ -8,6 +8,7 @@ import { DIVISIONS, RADIUS } from './constants';
 import { getRotation, hourToDeg } from './utils';
 
 const Dial = ({
+  className,
   hour,
   radius,
   divisions,
@@ -16,6 +17,7 @@ const Dial = ({
   pad,
   adder,
   clamp,
+  style,
 }) => {
   const svgRef = useRef(null);
 
@@ -54,26 +56,25 @@ const Dial = ({
 
   const degrees = hourToDeg(hour, clamp);
   return (
-    <div className="dial__picker--wrapper">
-      <svg ref={svgRef} className="dial__picker--container" viewBox="0 0 300 300">
-        <g className="clock">
-          <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
+    <svg ref={svgRef} className={`dial__picker--container ${className}`} viewBox="0 0 300 300" style={style}>
+      <g className="clock">
+        <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
 
-          <Selector degrees={degrees} radius={radius} />
+        <Selector degrees={degrees} radius={radius} />
 
-          <Nums
-            num={divisions}
-            radius={radius}
-            adder={adder}
-            onNumTap={onSet}
-          />
-        </g>
-      </svg>
-    </div>
+        <Nums
+          num={divisions}
+          radius={radius}
+          adder={adder}
+          onNumTap={onSet}
+        />
+      </g>
+    </svg>
   )
 }
 
 Dial.defaultProps = {
+  className: '',
   hour: 0,
   radius: RADIUS,
   divisions: DIVISIONS,
@@ -83,9 +84,11 @@ Dial.defaultProps = {
   pad: 3,
   adder: 1,
   clamp: 12,
+  style: {},
 }
 
 Dial.propTypes = {
+  className: PropTypes.string,
   hour: PropTypes.number,
   radius: PropTypes.number,
   divisions: PropTypes.number,
@@ -95,6 +98,7 @@ Dial.propTypes = {
   pad: PropTypes.number,
   adder: PropTypes.number,
   clamp: PropTypes.number,
+  style: PropTypes.objectOf(PropTypes.any),
 }
 
 export default Dial
