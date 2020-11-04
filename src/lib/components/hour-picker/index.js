@@ -11,11 +11,10 @@ import Display from './display';
 import Dial from './dial';
 
 import { EDIT_HOURS, EDIT_MINUTES, FADE_MILLI } from './constants';
+import { parse24hours } from './utils';
+
 import './transitions.scss';
 import './style.scss';
-// import './theme.scss';
-
-// TODO: fix long press auto fit
 
 const HourPicker = ({
   id = Date.now().toString(16),
@@ -30,11 +29,11 @@ const HourPicker = ({
   const initialValue = useRef(value);
   const onChangeRef = useRef(onChange);
 
-  const [hours, setHrs] = useState(value.getHours() % 12);
-  const [minutes, setMin] = useState(value.getMinutes());
-  const [edit, setEdit] = useState(EDIT_HOURS);
-
   const [am, setAm] = useState(value.getHours() < 12);
+  const [hours, setHrs] = useState(parse24hours(value.getHours()));
+  const [minutes, setMin] = useState(value.getMinutes());
+
+  const [edit, setEdit] = useState(EDIT_HOURS);
 
   const onHourChange = useCallback((val) => {
     if (am) {

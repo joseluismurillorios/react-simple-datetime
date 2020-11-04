@@ -13,6 +13,16 @@ export const hourToDeg = (val, clamp = 12, adder = 0) => {
   return (value * offset) - 90;
 };
 
+export const parse24hours = (val) => {
+  const am = val < 12;
+  const hour = val % 12;
+  if (am) {
+    return hour;
+  } else {
+    return hour === 0 ? 12 : hour;
+  }
+}
+
 export const getRotation = (elem, x, y, round = 30, pad = 3) => {
   const rect = elem.getBoundingClientRect();
   const centerX = rect.x + rect.width / 2;

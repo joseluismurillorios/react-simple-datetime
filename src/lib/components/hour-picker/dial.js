@@ -78,8 +78,10 @@ const Dial = ({
       curRef.removeEventListener('touchend', onUp);
       curRef.removeEventListener('touchstart', onDown);
       curRef.removeEventListener('contextmenu', onContext);
+      curRef.removeEventListener('mousemove', onMove);
+      curRef.removeEventListener('touchmove', onMove);
     };
-  }, [onDown, onUp]);
+  }, [onDown, onUp, onMove]);
 
   const degrees = hourToDeg(hour, clamp);
   return (
