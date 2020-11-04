@@ -1,6 +1,4 @@
-$fade: 0.75s;
-$fast: 0.2s;
-$slow: 0.5s;
+$fade: 0.5s;
 
 @keyframes transition-fadeIn {
   0% {
@@ -48,74 +46,10 @@ $slow: 0.5s;
   &.transition-fade-exit-active {
     opacity: 0;
     transition: all $fade ease-in-out;
-    position: absolute;
-  }
-}
-
-// Fast
-.transition-fast-appear {
-  animation-duration: $fast;   
-  &.transition-fast-appear-active {
-    animation-name: transition-fadeIn;
-    animation-duration: $fast;   
-    animation-timing-function: ease-in-out; 
-    visibility: visible !important; 
-  }
-}
-
-.transition-fast-enter {
-  opacity: 0;
-  transition: all $fast ease-in-out;
-  &.transition-fast-enter-active {
-    opacity: 1;
-    transition: all $fast ease-in-out;
-  }
-}
-
-.transition-fast-exit {
-  opacity: 1;
-  transition: all $fast ease-in-out;
-  &.transition-fast-exit-active {
-    opacity: 0;
-    transition: all $fast ease-in-out;
-  }
-}
-
-// Slow
-.transition-slow-appear {
-  animation-duration: $slow;   
-  &.transition-slow-appear-active {
-    animation-name: transition-fadeIn;
-    animation-duration: $slow;   
-    animation-timing-function: ease-in-out; 
-    visibility: visible !important; 
-  }
-}
-
-.transition-slow-enter {
-  opacity: 0;
-  position: relative;
-  transition: all $slow ease-in-out;
-  &.transition-slow-enter-active {
-    opacity: 1;
-    position: relative;
-    transition: all $slow ease-in-out;
-  }
-}
-
-.transition-slow-exit {
-  opacity: 1;
-  position: absolute;
-  transition: all $slow ease-in-out;
-  &.transition-slow-exit-active {
-    opacity: 0;
-    position: absolute;
-    transition: all $slow ease-in-out;
+    // position: absolute;
   }
 }
 
 :export {
-  animationSlow: $slow;
-  animationFast: $fast;
   animationFade: $fade;
 }

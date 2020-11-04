@@ -27,9 +27,36 @@ $color-600: #3949AB;
     display: flex;
   }
 
+  &--wrapper {  
+    // width: 320px;
+    // max-width: 320px;
+    height: 320px;
+    flex: 0 0 320px;
+    margin: 0 auto;
+    position: relative;
+  }
+
   &--container {
     --picker-value: 0;
-    margin: 30px;
+    width: 260px;
+    height: 260px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.65s ease-in-out;
+    &.dial-hours {
+      transform: translate(-50%, -50%) scale(1.2);
+      &.active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
+    &.dial-minutes {
+      transform: translate(-50%, -50%) scale(0.8);
+      &.active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+    }
   }
 
   &--display {
@@ -106,6 +133,7 @@ $color-600: #3949AB;
 
   &--num {
     cursor: pointer;
+    transition: all .75s ease-in-out;
     &-text {
       font-size: 22px;
       font-weight: 400;
@@ -126,22 +154,15 @@ $color-600: #3949AB;
     fill: #D8D8D8;
   }
 
-  &--wrapper {  
-    max-width: 320px;
-    margin: 0 auto;
-    flex: 2;
-    position: relative;
-  }
-
   &--selector {
     transform: rotate(var(--picker-value));
-    // transition: all .25s ease-in-out;
     transform-origin: center;
     &-middle {
       fill: $color-200;
     }
     &-circle {
       fill: $color-50;
+      transition: all .75s ease-in-out;
     }
     &-circle-inner {
       fill: $color-200;
@@ -150,6 +171,7 @@ $color-600: #3949AB;
       stroke: $color-200;
       stroke-width: 2;
       stroke-linecap: round;
+      transition: all .75s ease-in-out;
     }
   }
 

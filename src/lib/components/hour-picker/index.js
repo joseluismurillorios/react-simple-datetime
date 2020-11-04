@@ -97,6 +97,7 @@ const HourPicker = ({
             mountOnEnter
           >
             <Dial
+              className={`dial-hours ${edit === EDIT_HOURS ? 'active' : 'inactive'}`}
               hour={hours}
               onChange={onHourChange}
               round={30}
@@ -113,6 +114,7 @@ const HourPicker = ({
             mountOnEnter
           >
             <Dial
+              className={`dial-minutes ${edit === EDIT_MINUTES ? 'active' : 'inactive'}`}
               hour={minutes}
               onChange={onMinuteChange}
               round={6}
@@ -122,43 +124,6 @@ const HourPicker = ({
             />
           </CSSTransition>
         </div>
-        {/* {
-          edit === EDIT_HOURS
-            ? (
-              <CSSTransition
-                in={show}
-                timeout={timeout}
-                classNames={`app__menu-${direction}`}
-                unmountOnExit={unmountOnExit}
-                mountOnEnter
-                onEnter={(el) => {
-                  setTimeout(() => {
-                    const { height } = el.getBoundingClientRect();
-                    onEnter(height);
-                  }, 200);
-                }}
-              >
-                <Dial
-                  hour={hours}
-                  onChange={onHourChange}
-                  round={30}
-                  pad={3}
-                  adder={1}
-                  clamp={12}
-                />
-              </CSSTransition>
-            )
-            : (
-              <Dial
-                hour={minutes}
-                onChange={onMinuteChange}
-                round={6}
-                pad={15}
-                adder={5}
-                clamp={60}
-              />
-            )
-        } */}
       </div>
       {
         controls && (
