@@ -39,6 +39,8 @@ const Dial = ({
   }, [onSet, round, pad]);
 
   const onDown = useCallback((e) => {
+    e.preventDefault();
+    e.stopPropagation();
     const {
       clientX,
       clientY,

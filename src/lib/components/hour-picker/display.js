@@ -9,7 +9,6 @@ const Display = ({
   isAM,
   setAm,
 }) => {
-  // const ampm = isAM ? 'AM' : 'PM';
   const onClickHour = () => {
     setEdit('hrs');
   };
@@ -51,7 +50,6 @@ const Display = ({
           </button>
         </div>
       </div>
-      {/* <div className="dial__picker--display-ampm">{ampm}</div> */}
     </div>
   );
 };

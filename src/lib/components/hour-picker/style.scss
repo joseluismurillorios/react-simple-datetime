@@ -1,20 +1,24 @@
 $light: #fff;
 
 $color-50: #E8EAF6;
-// $color-100: #C5CAE9;
+$color-100: #C5CAE9;
 $color-200: #9FA8DA;
-// $color-300: #7986CB;
-// $color-500: #3F51B5;
+$color-300: #7986CB;
+$color-500: #3F51B5;
 $color-600: #3949AB;
 
 .dial__picker {
   background-color: #EEEEEE;
   background-color: $color-50;
-  max-width: 800px;
+  max-width: 768px;
   margin: 0 auto;
 
   display: flex;
   flex-direction: column;
+
+  * {
+    user-select: none;
+  }
 
   button {
     appearance: none;
@@ -29,10 +33,8 @@ $color-600: #3949AB;
   }
 
   &--wrapper {  
-    // width: 320px;
-    // max-width: 320px;
-    height: 320px;
-    flex: 0 0 320px;
+    height: 300px;
+    flex: 0 0 300px;
     margin: 0 auto;
     position: relative;
   }
@@ -40,8 +42,8 @@ $color-600: #3949AB;
   &--container {
     --picker-value: 0;
     touch-action: none;
-    width: 260px;
-    height: 260px;
+    width: 240px;
+    height: 240px;
     position: absolute;
     top: 50%;
     left: 50%;

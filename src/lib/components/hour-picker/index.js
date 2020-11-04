@@ -15,6 +15,8 @@ import './transitions.scss';
 import './style.scss';
 // import './theme.scss';
 
+// TODO: fix long press auto fit
+
 const HourPicker = ({
   id = Date.now().toString(16),
   value = new Date(),
@@ -88,7 +90,6 @@ const HourPicker = ({
           setEdit={setEdit}
           isAM={am}
           setAm={onAmPmChange}
-          ampm={am ? 'AM' : 'PM'}
         />
         <div className="dial__picker--wrapper">
           <CSSTransition
