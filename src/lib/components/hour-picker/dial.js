@@ -5,7 +5,7 @@ import Selector from './selector';
 import Nums from './nums';
 
 import { DIVISIONS, RADIUS } from './constants';
-import { getRotation, hourToDeg } from './utils';
+import { getRotation, getTouches, hourToDeg } from './utils';
 
 const Dial = ({
   className,
@@ -26,31 +26,46 @@ const Dial = ({
   }, [onChange]);
 
   const onMove = useCallback((e) => {
+    e.preventDefault();
+    const {
+      clientX,
+      clientY,
+    } = getTouches(e);
     const {
       value: val,
-    } = getRotation(svgRef.current, e.clientX, e.clientY, round, pad);
+    } = getRotation(svgRef.current, clientX, clientY, round, pad);
     onSet(val);
   }, [onSet, round, pad]);
 
   const onDown = useCallback((e) => {
     const {
+      clientX,
+      clientY,
+    } = getTouches(e);
+    const {
       value: val,
-    } = getRotation(svgRef.current, e.clientX, e.clientY, 30, 3);
+    } = getRotation(svgRef.current, clientX, clientY, 30, 3);
     onSet(val * adder);
     svgRef.current.addEventListener('mousemove', onMove);
+    svgRef.current.addEventListener('touchmove', onMove);
   }, [onSet, onMove, adder]);
 
   const onUp = useCallback(() => {
     svgRef.current.removeEventListener('mousemove', onMove);
+    svgRef.current.removeEventListener('touchmove', onMove);
   }, [onMove]);
 
   useEffect(() => {
     svgRef.current.addEventListener('mouseup', onUp);
     svgRef.current.addEventListener('mousedown', onDown);
+    svgRef.current.addEventListener('touchend', onUp);
+    svgRef.current.addEventListener('touchstart', onDown);
     const curRef = svgRef.current;
     return () => {
       curRef.removeEventListener('mouseup', onUp);
       curRef.removeEventListener('mousedown', onDown);
+      curRef.removeEventListener('touchend', onUp);
+      curRef.removeEventListener('touchstart', onDown);
     };
   }, [onDown, onUp]);
 

@@ -33,3 +33,10 @@ export const getRotation = (elem, x, y, round = 30, pad = 3) => {
     value,
   };
 };
+
+export const getTouches = (e) => {
+  if (e.type === 'touchmove' || e.type === 'touchstart') {
+    return e.touches[0]
+  }
+  return e;
+}
