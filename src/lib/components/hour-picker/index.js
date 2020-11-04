@@ -23,6 +23,8 @@ const HourPicker = ({
   onCancel,
   controls,
 }) => {
+  const hourTransRef = useRef(null);
+  const minuteTransRef = useRef(null);
   const initialValue = useRef(value);
   const onChangeRef = useRef(onChange);
 
@@ -90,6 +92,7 @@ const HourPicker = ({
         />
         <div className="dial__picker--wrapper">
           <CSSTransition
+            nodeRef={hourTransRef}
             in={edit === EDIT_HOURS}
             timeout={FADE_MILLI}
             classNames="transition-fade"
@@ -107,6 +110,7 @@ const HourPicker = ({
             />
           </CSSTransition>
           <CSSTransition
+            nodeRef={minuteTransRef}
             in={edit === EDIT_MINUTES}
             timeout={FADE_MILLI}
             classNames="transition-fade"
