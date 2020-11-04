@@ -56,17 +56,26 @@ const Dial = ({
     svgRef.current.removeEventListener('touchmove', onMove);
   }, [onMove]);
 
+  const onContext = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
+    return false;
+  }
+
   useEffect(() => {
     svgRef.current.addEventListener('mouseup', onUp);
     svgRef.current.addEventListener('mousedown', onDown);
     svgRef.current.addEventListener('touchend', onUp);
     svgRef.current.addEventListener('touchstart', onDown);
+    svgRef.current.addEventListener('contextmenu', onContext);
     const curRef = svgRef.current;
     return () => {
       curRef.removeEventListener('mouseup', onUp);
       curRef.removeEventListener('mousedown', onDown);
       curRef.removeEventListener('touchend', onUp);
       curRef.removeEventListener('touchstart', onDown);
+      curRef.removeEventListener('contextmenu', onContext);
     };
   }, [onDown, onUp]);
 

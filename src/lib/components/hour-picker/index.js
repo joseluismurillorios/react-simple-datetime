@@ -99,15 +99,17 @@ const HourPicker = ({
             unmountOnExit
             mountOnEnter
           >
-            <Dial
-              className={`dial-hours ${edit === EDIT_HOURS ? 'active' : 'inactive'}`}
-              hour={hours}
-              onChange={onHourChange}
-              round={30}
-              pad={3}
-              adder={1}
-              clamp={12}
-            />
+            <div className="dial__picker--transition" ref={hourTransRef}>
+              <Dial
+                className={`dial-hours ${edit === EDIT_HOURS ? 'active' : 'inactive'}`}
+                hour={hours}
+                onChange={onHourChange}
+                round={30}
+                pad={3}
+                adder={1}
+                clamp={12}
+              />
+            </div>
           </CSSTransition>
           <CSSTransition
             nodeRef={minuteTransRef}
@@ -117,15 +119,17 @@ const HourPicker = ({
             unmountOnExit
             mountOnEnter
           >
-            <Dial
-              className={`dial-minutes ${edit === EDIT_MINUTES ? 'active' : 'inactive'}`}
-              hour={minutes}
-              onChange={onMinuteChange}
-              round={6}
-              pad={15}
-              adder={5}
-              clamp={60}
-            />
+            <div className="dial__picker--transition" ref={minuteTransRef}>
+              <Dial
+                className={`dial-minutes ${edit === EDIT_MINUTES ? 'active' : 'inactive'}`}
+                hour={minutes}
+                onChange={onMinuteChange}
+                round={6}
+                pad={15}
+                adder={5}
+                clamp={60}
+              />
+            </div>
           </CSSTransition>
         </div>
       </div>
