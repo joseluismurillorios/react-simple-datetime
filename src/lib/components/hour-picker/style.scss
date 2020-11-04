@@ -86,6 +86,7 @@ $color-600: #3949AB;
       font-weight: 300;
       color: $color-200;
       letter-spacing: 0.07em;
+      user-select: none;
       &.active {
         color: $light;
       }
