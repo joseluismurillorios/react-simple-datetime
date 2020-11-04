@@ -18,6 +18,7 @@ const Dial = ({
   adder,
   clamp,
   style,
+  active,
 }) => {
   const svgRef = useRef(null);
 
@@ -66,26 +67,32 @@ const Dial = ({
   }
 
   useEffect(() => {
-    svgRef.current.addEventListener('mouseup', onUp);
-    svgRef.current.addEventListener('mousedown', onDown);
-    svgRef.current.addEventListener('touchend', onUp);
-    svgRef.current.addEventListener('touchstart', onDown);
-    svgRef.current.addEventListener('contextmenu', onContext);
     const curRef = svgRef.current;
+    if (active) {
+      svgRef.current.addEventListener('mouseup', onUp);
+      svgRef.current.addEventListener('mousedown', onDown);
+      svgRef.current.addEventListener('touchend', onUp);
+      svgRef.current.addEventListener('touchstart', onDown);
+      svgRef.current.addEventListener('contextmenu', onContext);
+    }
     return () => {
-      curRef.removeEventListener('mouseup', onUp);
-      curRef.removeEventListener('mousedown', onDown);
-      curRef.removeEventListener('touchend', onUp);
-      curRef.removeEventListener('touchstart', onDown);
-      curRef.removeEventListener('contextmenu', onContext);
-      curRef.removeEventListener('mousemove', onMove);
-      curRef.removeEventListener('touchmove', onMove);
+      if (active) {
+        curRef.removeEventListener('mouseup', onUp);
+        curRef.removeEventListener('mousedown', onDown);
+        curRef.removeEventListener('touchend', onUp);
+        curRef.removeEventListener('touchstart', onDown);
+        curRef.removeEventListener('contextmenu', onContext);
+        curRef.removeEventListener('mousemove', onMove);
+        curRef.removeEventListener('touchmove', onMove);
+      }
     };
-  }, [onDown, onUp, onMove]);
+  }, [active, onDown, onUp, onMove]);
 
   const degrees = hourToDeg(hour, clamp);
+
+  const activeClass = active ? 'active' : '';
   return (
-    <svg ref={svgRef} className={`dial__picker--container ${className}`} viewBox="0 0 300 300" style={style}>
+    <svg ref={svgRef} className={`dial__picker--container ${activeClass} ${className}`} viewBox="0 0 300 300" style={style}>
       <g className="clock">
         <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
 
@@ -114,6 +121,7 @@ Dial.defaultProps = {
   adder: 1,
   clamp: 12,
   style: {},
+  active: true,
 }
 
 Dial.propTypes = {
@@ -128,6 +136,7 @@ Dial.propTypes = {
   adder: PropTypes.number,
   clamp: PropTypes.number,
   style: PropTypes.objectOf(PropTypes.any),
+  active: PropTypes.bool,
 }
 
 export default Dial

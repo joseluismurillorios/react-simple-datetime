@@ -36,11 +36,8 @@ const HourPicker = ({
   const [edit, setEdit] = useState(EDIT_HOURS);
 
   const onHourChange = useCallback((val) => {
-    if (am) {
-      setHrs(val % 12);
-    } else {
-      setHrs(val === 0 ? 12 : val);
-    }
+    const adder = am ? 0 : 12;
+    setHrs(parse24hours(val + adder));
   }, [am]);
 
   const onMinuteChange = useCallback((val) => {
@@ -101,13 +98,14 @@ const HourPicker = ({
           >
             <div className="dial__picker--transition" ref={hourTransRef}>
               <Dial
-                className={`dial-hours ${edit === EDIT_HOURS ? 'active' : 'inactive'}`}
+                className="dial-hours"
                 hour={hours}
                 onChange={onHourChange}
                 round={30}
                 pad={3}
                 adder={1}
                 clamp={12}
+                active={edit === EDIT_HOURS}
               />
             </div>
           </CSSTransition>
@@ -121,13 +119,14 @@ const HourPicker = ({
           >
             <div className="dial__picker--transition" ref={minuteTransRef}>
               <Dial
-                className={`dial-minutes ${edit === EDIT_MINUTES ? 'active' : 'inactive'}`}
+                className="dial-minutes"
                 hour={minutes}
                 onChange={onMinuteChange}
                 round={6}
                 pad={15}
                 adder={5}
                 clamp={60}
+                active={edit === EDIT_MINUTES}
               />
             </div>
           </CSSTransition>

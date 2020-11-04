@@ -48,7 +48,7 @@ $color-600: #3949AB;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    transition: transform 0.65s ease-in-out;
+    transition: transform 0.5s ease-in-out;
     &.dial-hours {
       transform: translate(-50%, -50%) scale(1.2);
       &.active {
