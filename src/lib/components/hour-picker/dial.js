@@ -27,6 +27,7 @@ const Dial = ({
 
   const onMove = useCallback((e) => {
     e.preventDefault();
+    e.stopPropagation();
     const {
       clientX,
       clientY,

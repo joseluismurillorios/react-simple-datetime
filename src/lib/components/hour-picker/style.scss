@@ -38,6 +38,7 @@ $color-600: #3949AB;
 
   &--container {
     --picker-value: 0;
+    touch-action: none;
     width: 260px;
     height: 260px;
     position: absolute;
