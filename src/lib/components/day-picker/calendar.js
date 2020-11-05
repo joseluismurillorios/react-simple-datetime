@@ -1,7 +1,6 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getDateParams, getMonthInfo, MONTHS_LONG } from './utils';
-import Day from './day';
+import { getDateParams, MONTHS_LONG } from './utils';
 import Days from './days';
 import Weekdays from './weekdays';
 
@@ -10,50 +9,28 @@ const Calendar = ({
   initial,
 }) => {
   const todayDate = useRef(getDateParams()).current;
-  const selectedDate = new Date(initial.setDate(1));
-  const [month, setMonth] = useState(selectedDate.getMonth());
-  const [year, setYear] = useState(selectedDate.getFullYear());
-  const {
-    lastDay,
-    prevLastDay,
-    firstDayIndex,
-    lastDayIndex,
-    nextDays,
-    prevDays,
-    monthDaysArray,
-    nextDaysArray,
-    prevDaysArray,
-  } = getMonthInfo(selectedDate);
-  console.log({ value });
-  console.log({ todayDate });
-  console.log({ month, year });
-  console.log({
-    lastDay,
-    prevLastDay,
-    firstDayIndex,
-    lastDayIndex,
-    nextDays,
-    prevDays,
-    monthDaysArray,
-    nextDaysArray,
-    prevDaysArray,
-  });
+  const [selected, setSelected] = useState(new Date(initial.setDate(1)));
+  const [month, setMonth] = useState(selected.getMonth());
+  const [year, setYear] = useState(selected.getFullYear());
+  useEffect(() => {
+    setSelected(new Date(year, month, 1, 0, 0));
+  }, [year, month])
   return (
     <div className="day__picker--calendar">
       <div className="day__picker--calendar-header">
-        <button className="day__picker--calendar-prev">
+        <button className="day__picker--calendar-prev" onClick={() => { setMonth(month - 1) }}>
           <i className="day__picker--calendar-control control-prev" />
         </button>
         <button className="day__picker--calendar-current">
           {`${MONTHS_LONG[month]} ${year}`}
         </button>
-        <button className="day__picker--calendar-next">
+        <button className="day__picker--calendar-next" onClick={() => { setMonth(month + 1) }}>
           <i className="day__picker--calendar-control control-next" />
         </button>
       </div>
       <div className="day__picker--calendar-weeks">
         <Weekdays />
-        <Days todayDate={todayDate} selectedDate={selectedDate} />
+        <Days todayDate={todayDate} selected={selected} />
       </div>
     </div>
   )

@@ -5,13 +5,13 @@ import Day from './day';
 
 const Days = ({
   todayDate,
-  selectedDate,
+  selected,
 }) => {
   const {
     monthDaysArray,
     nextDaysArray,
     prevDaysArray,
-  } = getMonthInfo(selectedDate);
+  } = getMonthInfo(selected);
   return (
     <div className="day__picker--calendar-days">
       {
@@ -35,12 +35,12 @@ const Days = ({
 
 Days.propTypes = {
   todayDate: getMonthInfo(),
-  selectedDate: new Date(),
+  selected: new Date(),
 }
 
 Days.propTypes = {
   todayDate: PropTypes.objectOf(PropTypes.any),
-  selectedDate: PropTypes.instanceOf(Date),
+  selected: PropTypes.instanceOf(Date),
 }
 
 export default Days
