@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 
-const parseInitial = (initial = new Date()) => {
-  const date = new Date(initial.setDate(1));
-  return {
-    year: date.getFullYear(),
-    month: date.getMonth(),
-    date,
-  };
-}
+// const parseInitial = (initial = new Date()) => {
+//   const date = new Date(initial.setDate(1));
+//   return {
+//     year: date.getFullYear(),
+//     month: date.getMonth(),
+//     day: date.getDate(),
+//     date,
+//   };
+// };
 
-const getMonthInfo = (date) => {
+const getDateParams = (date = new Date()) => {
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const day = date.getDate();
+  return {
+    year,
+    month,
+    day,
+    formatted: `${year}-${month}-${day}`,
+  };
+};
+
+const getMonthInfo = (date = new Date()) => {
   const firstDayIndex = date.getDay();
   const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
   const prevLastDay = new Date(date.getFullYear(), date.getMonth(), 0).getDate();
@@ -37,30 +50,21 @@ const Calendar = ({
   value,
   initial,
 }) => {
-  const { month, year, date } = parseInitial(initial);
+  console.log({ value });
+  const selectedDate = new Date(initial.setDate(1));
+  const currentDate = useRef(getDateParams()).current;
+  console.log({ currentDate, selectedDate });
   const {
-    lastDay,
-    prevLastDay,
-    firstDayIndex,
-    lastDayIndex,
-    nextDays,
-    prevDays,
+    // lastDay,
+    // prevLastDay,
+    // firstDayIndex,
+    // lastDayIndex,
+    // nextDays,
+    // prevDays,
     monthDaysArray,
     nextDaysArray,
     prevDaysArray,
-  } = getMonthInfo(date);
-  console.log({ value, month, year, date });
-  console.log({
-    lastDay,
-    prevLastDay,
-    firstDayIndex,
-    lastDayIndex,
-    nextDays,
-    prevDays,
-    monthDaysArray,
-    nextDaysArray,
-    prevDaysArray,
-  })
+  } = getMonthInfo(selectedDate);
   return (
     <div className="day__picker--calendar">
       <div className="day__picker--calendar-header">
@@ -106,12 +110,12 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   value: new Date(),
-  initial: undefined,
+  initial: new Date(),
 };
 
 Calendar.propTypes = {
   value: PropTypes.instanceOf(Date),
-  initial: PropTypes.number,
+  initial: PropTypes.instanceOf(Date),
 };
 
 export default Calendar;

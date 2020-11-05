@@ -149,6 +149,7 @@ $color-600: #3949AB;
     }
 
     &-day {
+      font-size: 0.9rem;
       width: calc(100% / 7);
       text-align: center;
       height: 36px;
@@ -156,6 +157,9 @@ $color-600: #3949AB;
       cursor: pointer;
       // border-bottom: 1px solid $color-100;
       box-sizing: border-box;
+      &:hover {
+        background-color: $color-100;
+      }
       &.prev-day, &.next-day {
         color: $color-200;
       }
