@@ -2,22 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './style.scss';
+import Display from './display';
+import Calendar from './calendar';
 
 const DayPicker = () => {
   return (
     <div className="day__picker">
       <div className="day__picker--main">
-        <div className="day__picker--display">
-          <div className="day__picker--display-values">
-            <div className="day__picker--display-year">2020</div>
-            <div className="day__picker--display-current">
-              <div className="day__picker--display-weekday">Tue</div>
-              <div className="day__picker--display-day">14</div>
-              <div className="day__picker--display-month">Nov</div>
-            </div>
-          </div>
+        <Display />
+        <div className="day__picker--wrapper">
+          <Calendar />
         </div>
-        <div className="day__picker--wrapper"></div>
       </div>
     </div>
   )
@@ -25,6 +20,6 @@ const DayPicker = () => {
 
 DayPicker.propTypes = {
 
-}
+};
 
-export default DayPicker
+export default DayPicker;

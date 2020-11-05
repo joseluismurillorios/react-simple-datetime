@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Display = ({
+const DisplayHour = ({
   hours,
   minutes,
   edit,
@@ -54,7 +54,7 @@ const Display = ({
   );
 };
 
-Display.defaultProps = {
+DisplayHour.defaultProps = {
   hours: 0,
   minutes: 0,
   isAM: false,
@@ -63,7 +63,7 @@ Display.defaultProps = {
   setAm: () => {},
 };
 
-Display.propTypes = {
+DisplayHour.propTypes = {
   hours: PropTypes.number,
   minutes: PropTypes.number,
   isAM: PropTypes.bool,
@@ -72,4 +72,4 @@ Display.propTypes = {
   setAm: PropTypes.func,
 };
 
-export default Display;
+export default DisplayHour;
