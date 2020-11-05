@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 // const parseInitial = (initial = new Date()) => {
@@ -10,6 +10,22 @@ import PropTypes from 'prop-types';
 //     date,
 //   };
 // };
+
+const MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const MONTHS_LONG = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
 
 const getDateParams = (date = new Date()) => {
   const year = date.getFullYear();
@@ -31,8 +47,8 @@ const getMonthInfo = (date = new Date()) => {
   const nextDays = 7 - lastDayIndex - 1;
   const prevDays = 7 - firstDayIndex;
   const monthDaysArray = Array.from({ length: lastDay }, (_, i) => i + 1);
-  const nextDaysArray = Array.from({ length: nextDays }, (_, i) => i + 1);
   const prevDaysArray = Array.from({ length: prevDays }, (_, i) => prevLastDay - i).reverse();
+  const nextDaysArray = Array.from({ length: 42 - prevDaysArray.length - monthDaysArray.length }, (_, i) => i + 1);
   return {
     lastDay,
     prevLastDay,
@@ -50,28 +66,43 @@ const Calendar = ({
   value,
   initial,
 }) => {
-  console.log({ value });
-  const selectedDate = new Date(initial.setDate(1));
   const currentDate = useRef(getDateParams()).current;
-  console.log({ currentDate, selectedDate });
+  const selectedDate = new Date(initial.setDate(1));
+  const [month, setMonth] = useState(selectedDate.getMonth());
+  const [year, setYear] = useState(selectedDate.getFullYear());
   const {
-    // lastDay,
-    // prevLastDay,
-    // firstDayIndex,
-    // lastDayIndex,
-    // nextDays,
-    // prevDays,
+    lastDay,
+    prevLastDay,
+    firstDayIndex,
+    lastDayIndex,
+    nextDays,
+    prevDays,
     monthDaysArray,
     nextDaysArray,
     prevDaysArray,
   } = getMonthInfo(selectedDate);
+  console.log({ value });
+  console.log({ month, year });
+  console.log({
+    lastDay,
+    prevLastDay,
+    firstDayIndex,
+    lastDayIndex,
+    nextDays,
+    prevDays,
+    monthDaysArray,
+    nextDaysArray,
+    prevDaysArray,
+  });
   return (
     <div className="day__picker--calendar">
       <div className="day__picker--calendar-header">
         <button className="day__picker--calendar-prev">
           <i className="day__picker--calendar-control control-prev" />
         </button>
-        <button className="day__picker--calendar-current">November 2020</button>
+        <button className="day__picker--calendar-current">
+          {`${MONTHS_LONG[month]} ${year}`}
+        </button>
         <button className="day__picker--calendar-next">
           <i className="day__picker--calendar-control control-next" />
         </button>
@@ -110,7 +141,7 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   value: new Date(),
-  initial: new Date(),
+  initial: new Date(2020, 1, 25),
 };
 
 Calendar.propTypes = {
