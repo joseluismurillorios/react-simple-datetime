@@ -92,9 +92,9 @@ const Dial = ({
 
   const activeClass = active ? 'active' : '';
   return (
-    <svg ref={svgRef} className={`dial__picker--container ${activeClass} ${className}`} viewBox="0 0 300 300" style={style}>
+    <svg ref={svgRef} className={`hour__picker--container ${activeClass} ${className}`} viewBox="0 0 300 300" style={style}>
       <g className="clock">
-        <circle className="dial__picker--bg" cx="150" cy="150" r="150" />
+        <circle className="hour__picker--bg" cx="150" cy="150" r="150" />
 
         <Selector degrees={degrees} radius={radius} />
 

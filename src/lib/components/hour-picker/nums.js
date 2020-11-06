@@ -22,14 +22,14 @@ const Nums = ({
       return (
         <g
           key={`${uid}-${i}`}
-          className="dial__picker--num"
+          className="hour__picker--num"
           transform={`translate(${x}, ${y})`}
           onClick={() => {
             onNumTap(val);
           }}
         >
-          <circle className="dial__picker--num-bg" fill="#D8D8D8" fillRule="evenodd" cx="23.5" cy="23.5" r="23.5" />
-          <text className="dial__picker--num-text" x="23.5" y="25.5" dominantBaseline="middle">
+          <circle className="hour__picker--num-bg" fill="#D8D8D8" fillRule="evenodd" cx="23.5" cy="23.5" r="23.5" />
+          <text className="hour__picker--num-text" x="23.5" y="25.5" dominantBaseline="middle">
             {val}
           </text>
         </g>

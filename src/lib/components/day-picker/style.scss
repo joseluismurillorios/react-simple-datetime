@@ -1,0 +1,191 @@
+@import '../variables';
+
+.day__picker {
+  font-family: "Avenir Next W01","Lato",-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  background-color: $color-50;
+  color: $dark;
+  max-width: 768px;
+  // margin: 0 auto;
+
+  display: flex;
+  flex-direction: column;
+
+  * {
+    user-select: none;
+  }
+
+  button {
+    font-family: "Avenir Next W01","Lato",-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    outline: transparent;
+    user-select: none;
+  }
+
+  &--main {
+    display: flex;
+  }
+
+  &--wrapper {  
+    // height: 300px;
+    // flex: 0 0 300px;
+    height: 300px;
+    min-height: 300px;
+    flex: 1;
+
+    margin: 0 auto;
+    position: relative;
+  }
+
+  &--display {
+    display: flex;
+    flex-direction: column;
+    background-color: $color-600;
+    color: $color-50;
+    padding: 24px 0;
+
+    flex: 1;
+    justify-content: center;
+    &-values {
+      margin: 0 auto;
+      min-width: 240px;
+      min-height: 66px;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      justify-content: center;
+      align-items: flex-start;
+      position: relative;
+    }
+    &-current {
+      display: flex;
+    }
+    &-year, &-month, &-day, &-weekday {
+      font-weight: 400;
+      text-transform: uppercase;
+      color: $color-200;
+      letter-spacing: 0.07em;
+      user-select: none;
+    }
+    &-month, &-day, &-weekday {
+      line-height: 42px;
+      font-size: 42px;
+      font-weight: 300;
+    }
+    &-day {
+      margin: 0 5px;
+      color: $light;
+    }
+    &-year {
+      color: $light;
+    }
+  }
+
+  &--calendar {
+    &-header {
+      width: 100%;
+      height: 36px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 1px solid $color-100;
+    }
+    &-current {
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $dark;
+      flex: 0 0 200px;
+    }
+    &-prev, &-next {
+      width: 40px;
+      height: 36px;
+      cursor: pointer;
+    }
+
+    &-control {
+      border: solid $dark;
+      border-width: 0 1px 1px 0;
+      display: inline-block;
+      padding: 4px;
+
+      &.control-prev {
+        transform: rotate(135deg);
+      }
+  
+      &.control-next {
+        transform: rotate(-45deg);
+      }
+    }
+
+    &-weeks {
+      width: 100%;
+      height: 240px;
+    }
+
+    &-weekdays {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      height: 36px;
+      border-bottom: 1px solid $color-100;
+    }
+
+    &-weekday {
+      font-size: 0.9rem;
+      font-weight: 400;
+    }
+
+    &-days {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    &-day {
+      font-size: 0.9rem;
+      width: calc(100% / 7);
+      text-align: center;
+      height: 36px;
+      line-height: 36px;
+      cursor: pointer;
+      color: $dark;
+      // border-bottom: 1px solid $color-100;
+      box-sizing: border-box;
+      // transition: all .2s ease-in-out;
+      &.today {
+        background-color: rgba(255, 255, 255, 0.6);
+      }
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+      }
+      &.prev-day, &.next-day {
+        color: $color-200;
+      }
+      &.selected {
+        background-color: $color-500;
+        color: $light;
+      }
+    }
+  }
+
+  &--controls {
+    display: flex;
+    border-top: 1px solid #ccc;
+    &-control {
+      flex: 1;
+      padding: 24px 32px;
+      border: 0;
+      appearance: none;
+      text-transform: uppercase;
+    }
+  }
+}
+
+
+@media (max-width: 768px) {
+  .day__picker--main {
+    flex-direction: column;
+  }
+}

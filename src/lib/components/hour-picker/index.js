@@ -77,8 +77,8 @@ const HourPicker = ({
   }, [onChange]);
 
   return (
-    <div className="dial__picker">
-      <div className="dial__picker--main">
+    <div className="hour__picker">
+      <div className="hour__picker--main">
         <Display
           hours={hours}
           minutes={minutes}
@@ -87,7 +87,7 @@ const HourPicker = ({
           isAM={am}
           setAm={onAmPmChange}
         />
-        <div className="dial__picker--wrapper">
+        <div className="hour__picker--wrapper">
           <CSSTransition
             nodeRef={hourTransRef}
             in={edit === EDIT_HOURS}
@@ -96,7 +96,7 @@ const HourPicker = ({
             unmountOnExit
             mountOnEnter
           >
-            <div className="dial__picker--transition" ref={hourTransRef}>
+            <div className="hour__picker--transition" ref={hourTransRef}>
               <Dial
                 className="dial-hours"
                 hour={hours}
@@ -117,7 +117,7 @@ const HourPicker = ({
             unmountOnExit
             mountOnEnter
           >
-            <div className="dial__picker--transition" ref={minuteTransRef}>
+            <div className="hour__picker--transition" ref={minuteTransRef}>
               <Dial
                 className="dial-minutes"
                 hour={minutes}
