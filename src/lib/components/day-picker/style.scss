@@ -1,15 +1,9 @@
-$light: #fff;
-
-$color-50: #E8EAF6;
-$color-100: #C5CAE9;
-$color-200: #9FA8DA;
-$color-300: #7986CB;
-$color-500: #3F51B5;
-$color-600: #3949AB;
+@import '../variables';
 
 .day__picker {
   font-family: "Avenir Next W01","Lato",-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
   background-color: $color-50;
+  color: $dark;
   max-width: 768px;
   // margin: 0 auto;
 
@@ -102,6 +96,7 @@ $color-600: #3949AB;
       cursor: pointer;
       font-size: 0.9rem;
       font-weight: 400;
+      color: $dark;
     }
     &-prev, &-next {
       width: 40px;
@@ -110,7 +105,7 @@ $color-600: #3949AB;
     }
 
     &-control {
-      border: solid black;
+      border: solid $dark;
       border-width: 0 1px 1px 0;
       display: inline-block;
       padding: 4px;
@@ -159,6 +154,9 @@ $color-600: #3949AB;
       transition: all .2s ease-in-out;
       &:hover {
         background-color: rgba(255, 255, 255, 0.8);
+      }
+      &.today {
+        background-color: rgba(255, 255, 255, 0.6);
       }
       &.prev-day, &.next-day {
         color: $color-200;

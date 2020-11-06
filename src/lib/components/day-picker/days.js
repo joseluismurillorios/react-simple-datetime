@@ -6,13 +6,15 @@ import Day from './day';
 const Days = ({
   today,
   selected,
+  year,
+  month,
 }) => {
   const {
     monthDaysArray,
     nextDaysArray,
     prevDaysArray,
   } = getMonthInfo(selected);
-  console.log({ selected });
+  // console.log({ selected, today });
   // const month = selected.getMonth();
   // const year = selected.getFullYear();
   return (
@@ -35,8 +37,8 @@ const Days = ({
             key={`day-${day}`}
             day={day}
             today={today}
-            // month={month}
-            // year={year}
+            month={month}
+            year={year}
           />
         ))
       }

@@ -32,7 +32,8 @@ const DayPicker = ({
 
 DayPicker.defaultProps = {
   value: new Date(),
-  initial: new Date(2020, 1, 25),
+  initial: new Date(),
+  // initial: new Date(2020, 1, 25),
 };
 
 DayPicker.propTypes = {
