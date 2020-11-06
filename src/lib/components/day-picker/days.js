@@ -9,6 +9,7 @@ const Days = ({
   active,
   year,
   month,
+  onDayClick,
 }) => {
   const {
     monthDaysArray,
@@ -43,6 +44,7 @@ const Days = ({
             month={month}
             year={year}
             selected={formatted}
+            onClick={onDayClick}
           />
         ))
       }
@@ -66,12 +68,14 @@ Days.propTypes = {
   value: undefined,
   today: getMonthInfo(),
   active: new Date(),
+  onDayClick: () => {},
 }
 
 Days.propTypes = {
   value: PropTypes.instanceOf(Date),
   today: PropTypes.objectOf(PropTypes.any),
   active: PropTypes.instanceOf(Date),
+  onDayClick: PropTypes.func,
 }
 
 export default Days

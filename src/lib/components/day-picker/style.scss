@@ -149,14 +149,15 @@
       height: 36px;
       line-height: 36px;
       cursor: pointer;
+      color: $dark;
       // border-bottom: 1px solid $color-100;
       box-sizing: border-box;
       // transition: all .2s ease-in-out;
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.8);
-      }
       &.today {
         background-color: rgba(255, 255, 255, 0.6);
+      }
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.8);
       }
       &.prev-day, &.next-day {
         color: $color-200;

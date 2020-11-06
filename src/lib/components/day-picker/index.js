@@ -27,7 +27,7 @@ const DayPicker = ({
             value={selectedDate}
             today={todayDate}
             initial={initial}
-            setSelectedDate={setSelectedDate}
+            onDayClick={setSelectedDate}
           />
         </div>
       </div>

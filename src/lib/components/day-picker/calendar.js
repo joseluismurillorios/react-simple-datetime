@@ -8,6 +8,7 @@ const Calendar = ({
   value,
   initial,
   today,
+  onDayClick,
 }) => {
   const [active, setActive] = useState(new Date(initial.setDate(1)));
 
@@ -44,7 +45,7 @@ const Calendar = ({
       </div>
       <div className="day__picker--calendar-weeks">
         <Weekdays />
-        <Days value={value} today={today} active={active} year={year} month={month} />
+        <Days value={value} today={today} active={active} year={year} month={month} onDayClick={onDayClick} />
       </div>
     </div>
   )
@@ -55,12 +56,14 @@ Calendar.defaultProps = {
   // initial: new Date(2020, 1, 25),
   initial: new Date(),
   today: undefined,
+  onDayClick: () => {},
 };
 
 Calendar.propTypes = {
   value: PropTypes.instanceOf(Date),
   initial: PropTypes.instanceOf(Date),
   today: PropTypes.objectOf(PropTypes.any),
+  onDayClick: PropTypes.func,
 };
 
 export default Calendar;

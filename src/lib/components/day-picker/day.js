@@ -8,13 +8,23 @@ const Day = ({
   year,
   month,
   selected,
+  onClick,
 }) => {
-  const active = today.formatted === `${year}-${month}-${day}`;
-  const current = selected === `${year}-${month}-${day}`;
+  const datestring = `${year}-${month}-${day}`;
+  const active = today.formatted === datestring;
+  const current = selected === datestring;
   const activeClass = active ? 'today' : '';
   const currentClass = current ? 'selected' : '';
+  const onTap = () => {
+    onClick(new Date(year, month, day, 0, 0));
+  };
   return (
-    <div className={`day__picker--calendar-day ${activeClass} ${currentClass} ${className}`}>{day}</div>
+    <button
+      className={`day__picker--calendar-day ${activeClass} ${currentClass} ${className}`}
+      onClick={onTap}
+    >
+      {day}
+    </button>
   )
 };
 
