@@ -151,7 +151,7 @@
       cursor: pointer;
       // border-bottom: 1px solid $color-100;
       box-sizing: border-box;
-      transition: all .2s ease-in-out;
+      // transition: all .2s ease-in-out;
       &:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
@@ -160,6 +160,10 @@
       }
       &.prev-day, &.next-day {
         color: $color-200;
+      }
+      &.selected {
+        background-color: $color-500;
+        color: $light;
       }
     }
   }

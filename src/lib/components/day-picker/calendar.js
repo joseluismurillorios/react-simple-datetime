@@ -9,26 +9,26 @@ const Calendar = ({
   initial,
   today,
 }) => {
-  const [selected, setSelected] = useState(new Date(initial.setDate(1)));
+  const [active, setActive] = useState(new Date(initial.setDate(1)));
 
   const onNext = () => {
     const {
       month,
       year,
-    } = getDateParams(selected);
-    setSelected(new Date(year, month + 1, 1, 0, 0));
+    } = getDateParams(active);
+    setActive(new Date(year, month + 1, 1, 0, 0));
   };
 
   const onPrev = () => {
     const {
       month,
       year,
-    } = getDateParams(selected);
-    setSelected(new Date(year, month - 1, 1, 0, 0));
+    } = getDateParams(active);
+    setActive(new Date(year, month - 1, 1, 0, 0));
   };
 
-  const month = selected.getMonth();
-  const year = selected.getFullYear();
+  const month = active.getMonth();
+  const year = active.getFullYear();
   return (
     <div className="day__picker--calendar">
       <div className="day__picker--calendar-header">
@@ -44,7 +44,7 @@ const Calendar = ({
       </div>
       <div className="day__picker--calendar-weeks">
         <Weekdays />
-        <Days today={today} selected={selected} year={year} month={month} />
+        <Days value={value} today={today} active={active} year={year} month={month} />
       </div>
     </div>
   )

@@ -23,7 +23,12 @@ const DayPicker = ({
       <div className="day__picker--main">
         <Display month={month} year={year} day={day} weekday={weekday} />
         <div className="day__picker--wrapper">
-          <Calendar today={todayDate} initial={initial} setSelectedDate={setSelectedDate} />
+          <Calendar
+            value={selectedDate}
+            today={todayDate}
+            initial={initial}
+            setSelectedDate={setSelectedDate}
+          />
         </div>
       </div>
     </div>
@@ -31,9 +36,9 @@ const DayPicker = ({
 }
 
 DayPicker.defaultProps = {
-  value: new Date(),
+  // value: new Date(),
+  value: new Date(2020, 10, 25),
   initial: new Date(),
-  // initial: new Date(2020, 1, 25),
 };
 
 DayPicker.propTypes = {

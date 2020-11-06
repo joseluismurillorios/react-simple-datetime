@@ -1,11 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getMonthInfo } from './utils';
+import { getDateParams, getMonthInfo } from './utils';
 import Day from './day';
 
 const Days = ({
+  value,
   today,
-  selected,
+  active,
   year,
   month,
 }) => {
@@ -13,10 +14,12 @@ const Days = ({
     monthDaysArray,
     nextDaysArray,
     prevDaysArray,
-  } = getMonthInfo(selected);
-  // console.log({ selected, today });
-  // const month = selected.getMonth();
-  // const year = selected.getFullYear();
+  } = getMonthInfo(active);
+  const {
+    formatted,
+  } = getDateParams(value);
+  // const month = active.getMonth();
+  // const year = active.getFullYear();
   return (
     <div className="day__picker--calendar-days">
       {
@@ -39,6 +42,7 @@ const Days = ({
             today={today}
             month={month}
             year={year}
+            selected={formatted}
           />
         ))
       }
@@ -59,13 +63,15 @@ const Days = ({
 }
 
 Days.propTypes = {
+  value: undefined,
   today: getMonthInfo(),
-  selected: new Date(),
+  active: new Date(),
 }
 
 Days.propTypes = {
+  value: PropTypes.instanceOf(Date),
   today: PropTypes.objectOf(PropTypes.any),
-  selected: PropTypes.instanceOf(Date),
+  active: PropTypes.instanceOf(Date),
 }
 
 export default Days
