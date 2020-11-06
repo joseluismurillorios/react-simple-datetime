@@ -13,15 +13,18 @@ export const MONTHS_LONG = [
   'November',
   'December',
 ];
+export const WEEKDAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat'];
 
 export const getDateParams = (date = new Date()) => {
   const year = date.getFullYear();
   const month = date.getMonth();
   const day = date.getDate();
+  const weekday = date.getDay();
   return {
     year,
     month,
     day,
+    weekday,
     formatted: `${year}-${month}-${day}`,
   };
 };

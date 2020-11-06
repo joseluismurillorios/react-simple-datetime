@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './style.scss';
@@ -11,13 +11,19 @@ const DayPicker = ({
   initial,
 }) => {
   const todayDate = useRef(getDateParams()).current;
-  const selectedMonth = new Date(initial.setDate(1));
+  const [selectedDate, setSelectedDate] = useState(value);
+  const {
+    month,
+    year,
+    day,
+    weekday,
+  } = getDateParams(selectedDate);
   return (
     <div className="day__picker">
       <div className="day__picker--main">
-        <Display />
+        <Display month={month} year={year} day={day} weekday={weekday} />
         <div className="day__picker--wrapper">
-          <Calendar />
+          <Calendar today={todayDate} initial={initial} setSelectedDate={setSelectedDate} />
         </div>
       </div>
     </div>

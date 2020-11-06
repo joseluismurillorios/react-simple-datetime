@@ -1,23 +1,33 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 
-const DisplayDay = () => {
-  return (
-    <div className="day__picker--display">
-      <div className="day__picker--display-values">
-        <div className="day__picker--display-year">2020</div>
-        <div className="day__picker--display-current">
-          <div className="day__picker--display-weekday">Tue</div>
-          <div className="day__picker--display-day">14</div>
-          <div className="day__picker--display-month">Nov</div>
-        </div>
+import { getDateParams, MONTHS_SHORT, WEEKDAYS_SHORT } from './utils';
+
+const DisplayDay = ({
+  month,
+  year,
+  day,
+  weekday,
+}) => (
+  <div className="day__picker--display">
+    <div className="day__picker--display-values">
+      <div className="day__picker--display-year">{year}</div>
+      <div className="day__picker--display-current">
+        <div className="day__picker--display-weekday">{WEEKDAYS_SHORT[weekday]}</div>
+        <div className="day__picker--display-day">{day}</div>
+        <div className="day__picker--display-month">{MONTHS_SHORT[month]}</div>
       </div>
     </div>
-  )
-}
+  </div>
+);
+
+DisplayDay.defaultProps = getDateParams();
 
 DisplayDay.propTypes = {
-
+  month: PropTypes.number,
+  year: PropTypes.number,
+  day: PropTypes.number,
+  weekday: PropTypes.number,
 };
 
 export default DisplayDay;
