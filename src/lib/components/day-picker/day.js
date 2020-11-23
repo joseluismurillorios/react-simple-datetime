@@ -20,7 +20,7 @@ const Day = ({
   const activeClass = active ? 'today' : '';
   const currentClass = current ? 'selected' : '';
   const onTap = () => {
-    onClick(new Date(year, month, day, 0, 0));
+    onClick(year, month, day);
   };
   const marked = markedDates[formattedstring];
   return (
@@ -48,6 +48,7 @@ Day.defaultProps = {
   year: undefined,
   month: undefined,
   markedDates: {},
+  onClick: () => {},
 };
 
 Day.propTypes = {
@@ -57,6 +58,7 @@ Day.propTypes = {
   year: PropTypes.number,
   month: PropTypes.number,
   markedDates: PropTypes.objectOf(PropTypes.any),
+  onClick: PropTypes.func,
 };
 
 export default Day

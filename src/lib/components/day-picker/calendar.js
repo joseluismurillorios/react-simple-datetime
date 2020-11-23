@@ -13,6 +13,18 @@ const Calendar = ({
 }) => {
   const [active, setActive] = useState(new Date(initialDate.setDate(1)));
 
+  const month = active.getMonth();
+  const year = active.getFullYear();
+
+  const onDayClicked = (y, m, d) => {
+    const newValue = new Date(y, m, d, 0, 0);
+    onDayClick(newValue);
+    // if (m !== month || y !== year) {
+    //   console.log({ m, month, y, year });
+    //   setActive(new Date(y, m, 1, 0, 0));
+    // }
+  };
+
   const onNext = () => {
     const {
       month,
@@ -28,9 +40,6 @@ const Calendar = ({
     } = getDateParams(active);
     setActive(new Date(year, month - 1, 1, 0, 0));
   };
-
-  const month = active.getMonth();
-  const year = active.getFullYear();
   return (
     <div className="day__picker--calendar">
       <div className="day__picker--calendar-header">
@@ -53,7 +62,7 @@ const Calendar = ({
           year={year}
           month={month}
           markedDates={markedDates}
-          onDayClick={onDayClick}
+          onDayClick={onDayClicked}
         />
       </div>
     </div>

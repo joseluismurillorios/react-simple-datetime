@@ -163,19 +163,24 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
-      &.prev-day, &.next-day {
-        color: $color-200;
-      }
       &.selected {
         background-color: $color-500;
         color: $light;
+      }
+      &.prev-day, &.next-day {
+        color: $color-200;
+        &.selected {
+          background-color: $color-100;
+          // color: $light;
+        }
       }
     }
 
     &-dots {
       display: flex;
       width: 100%;
-      height: 8px;
+      height: 4px;
+      margin-top: 2px;
       align-items: center;
       justify-content: center;
     }
