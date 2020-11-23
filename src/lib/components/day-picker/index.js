@@ -56,6 +56,9 @@ const DayPicker = ({
             onMonth={() => {
               setEdit(EDIT_MONTH)
             }}
+            onDate={() => {
+              setEdit(EDIT_DAY)
+            }}
           />
         </div>
       </div>

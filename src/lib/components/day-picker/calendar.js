@@ -14,6 +14,7 @@ const Calendar = ({
   markedDates,
   onDayClick,
   onMonth,
+  onDate,
 }) => {
   const daysTransRef = useRef(null);
   const monthsTransRef = useRef(null);
@@ -29,6 +30,12 @@ const Calendar = ({
     //   console.log({ m, month, y, year });
     //   setActive(new Date(y, m, 1, 0, 0));
     // }
+  };
+
+  const onMonthClicked = (m) => {
+    const newValue = new Date(year, m, 1, 0, 0);
+    setActive(newValue);
+    onDate();
   };
 
   const onNext = () => {
@@ -57,29 +64,31 @@ const Calendar = ({
         unmountOnExit
         mountOnEnter
       >
-        <div ref={daysTransRef} className="day__picker--calendar">
-          <div className="day__picker--calendar-header">
-            <button className="day__picker--calendar-prev" onClick={onPrev}>
-              <i className="day__picker--calendar-control control-prev" />
-            </button>
-            <button onClick={onMonth} className="day__picker--calendar-current">
-              {`${MONTHS_LONG[month]} ${year}`}
-            </button>
-            <button className="day__picker--calendar-next" onClick={onNext}>
-              <i className="day__picker--calendar-control control-next" />
-            </button>
-          </div>
-          <div className="day__picker--calendar-weeks">
-            <Weekdays />
-            <Days
-              value={value}
-              today={today}
-              active={active}
-              year={year}
-              month={month}
-              markedDates={markedDates}
-              onDayClick={onDayClicked}
-            />
+        <div className="day__picker--transition" ref={daysTransRef}>
+          <div className={`day__picker--calendar ${edit === EDIT_DAY ? 'active' : ''}`}>
+            <div className="day__picker--calendar-header">
+              <button className="day__picker--calendar-prev" onClick={onPrev}>
+                <i className="day__picker--calendar-control control-prev" />
+              </button>
+              <button onClick={onMonth} className="day__picker--calendar-current">
+                {`${MONTHS_LONG[month]} ${year}`}
+              </button>
+              <button className="day__picker--calendar-next" onClick={onNext}>
+                <i className="day__picker--calendar-control control-next" />
+              </button>
+            </div>
+            <div className="day__picker--calendar-weeks">
+              <Weekdays />
+              <Days
+                value={value}
+                today={today}
+                active={active}
+                year={year}
+                month={month}
+                markedDates={markedDates}
+                onDayClick={onDayClicked}
+              />
+            </div>
           </div>
         </div>
       </CSSTransition>
@@ -92,15 +101,16 @@ const Calendar = ({
         mountOnEnter
       >
         <div className="day__picker--transition" ref={monthsTransRef}>
-          <div className="day__picker--months">
+          <div className={`day__picker--months ${edit === EDIT_MONTH ? 'active' : ''}`}>
             {
-              MONTHS_SHORT.map((month) => (
-                <div
+              MONTHS_SHORT.map((month, i) => (
+                <button
                   key={`month-${month}`}
                   className="day__picker--months-card"
+                  onClick={() => { onMonthClicked(i); }}
                 >
                   <div className="day__picker--months-month">{month}</div>
-                </div>
+                </button>
               ))
             }
           </div>
@@ -116,6 +126,7 @@ Calendar.defaultProps = {
   today: undefined,
   onDayClick: () => {},
   onMonth: () => {},
+  onDate: () => {},
   edit: EDIT_DAY,
 };
 
@@ -125,6 +136,7 @@ Calendar.propTypes = {
   today: PropTypes.objectOf(PropTypes.any),
   onDayClick: PropTypes.func,
   onMonth: PropTypes.func,
+  onDate: PropTypes.func,
   edit: PropTypes.string,
 };
 
