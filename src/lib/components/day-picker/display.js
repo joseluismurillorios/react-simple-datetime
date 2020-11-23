@@ -8,26 +8,34 @@ const DisplayDay = ({
   year,
   day,
   weekday,
+  onYear,
+  onDate,
 }) => (
   <div className="day__picker--display">
     <div className="day__picker--display-values">
-      <div className="day__picker--display-year">{year}</div>
-      <div className="day__picker--display-current">
+      <button className="day__picker--display-year" onClick={onYear}>{year}</button>
+      <button className="day__picker--display-current" onClick={onDate}>
         <div className="day__picker--display-weekday">{WEEKDAYS_SHORT[weekday]}</div>
         <div className="day__picker--display-day">{day}</div>
         <div className="day__picker--display-month">{MONTHS_SHORT[month]}</div>
-      </div>
+      </button>
     </div>
   </div>
 );
 
-DisplayDay.defaultProps = getDateParams();
+DisplayDay.defaultProps = {
+  ...getDateParams(),
+  onYear: () => {},
+  onDate: () => {},
+};
 
 DisplayDay.propTypes = {
   month: PropTypes.number,
   year: PropTypes.number,
   day: PropTypes.number,
   weekday: PropTypes.number,
+  onYear: PropTypes.func,
+  onDate: PropTypes.func,
 };
 
 export default DisplayDay;

@@ -5,6 +5,7 @@ import './style.scss';
 import Display from './display';
 import Calendar from './calendar';
 import { getDateParams } from './utils';
+import { EDIT_DAY, EDIT_MONTH, EDIT_YEAR } from './constants';
 
 const DayPicker = ({
   value,
@@ -14,6 +15,7 @@ const DayPicker = ({
 }) => {
   const todayDate = useRef(getDateParams()).current;
   const [selectedDate, setSelectedDate] = useState(value);
+  const [edit, setEdit] = useState(EDIT_DAY);
   const onChangeRef = useRef(onChange);
   const {
     month,
@@ -31,7 +33,18 @@ const DayPicker = ({
   return (
     <div className="day__picker">
       <div className="day__picker--main">
-        <Display month={month} year={year} day={day} weekday={weekday} />
+        <Display
+          month={month}
+          year={year}
+          day={day}
+          weekday={weekday}
+          onYear={() => {
+            setEdit(EDIT_YEAR)
+          }}
+          onDate={() => {
+            setEdit(EDIT_DAY)
+          }}
+        />
         <div className="day__picker--wrapper">
           <Calendar
             value={selectedDate}
@@ -39,6 +52,10 @@ const DayPicker = ({
             initialDate={initialDate}
             onDayClick={setSelectedDate}
             markedDates={markedDates}
+            edit={edit}
+            onMonth={() => {
+              setEdit(EDIT_MONTH)
+            }}
           />
         </div>
       </div>
@@ -52,7 +69,7 @@ DayPicker.defaultProps = {
   initialDate: new Date(),
   onChange: () => {},
   markedDates: {
-    '2020-10-31': true,
+    '2020-10-25': true,
     '2020-10-09': true,
     '2020-09-30': true,
   },

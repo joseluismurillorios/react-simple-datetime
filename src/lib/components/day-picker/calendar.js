@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import { getDateParams, MONTHS_LONG } from './utils';
+import { getDateParams, MONTHS_LONG, MONTHS_SHORT } from './utils';
 import Days from './days';
 import Weekdays from './weekdays';
+import { CSSTransition } from 'react-transition-group';
+import { EDIT_DAY, EDIT_MONTH, FADE_MILLI } from './constants';
 
 const Calendar = ({
   value,
+  edit,
   initialDate,
   today,
   markedDates,
   onDayClick,
+  onMonth,
 }) => {
+  const daysTransRef = useRef(null);
+  const monthsTransRef = useRef(null);
   const [active, setActive] = useState(new Date(initialDate.setDate(1)));
 
   const month = active.getMonth();
@@ -40,41 +46,77 @@ const Calendar = ({
     } = getDateParams(active);
     setActive(new Date(year, month - 1, 1, 0, 0));
   };
+
   return (
-    <div className="day__picker--calendar">
-      <div className="day__picker--calendar-header">
-        <button className="day__picker--calendar-prev" onClick={onPrev}>
-          <i className="day__picker--calendar-control control-prev" />
-        </button>
-        <button className="day__picker--calendar-current">
-          {`${MONTHS_LONG[month]} ${year}`}
-        </button>
-        <button className="day__picker--calendar-next" onClick={onNext}>
-          <i className="day__picker--calendar-control control-next" />
-        </button>
-      </div>
-      <div className="day__picker--calendar-weeks">
-        <Weekdays />
-        <Days
-          value={value}
-          today={today}
-          active={active}
-          year={year}
-          month={month}
-          markedDates={markedDates}
-          onDayClick={onDayClicked}
-        />
-      </div>
-    </div>
+    <>
+      <CSSTransition
+        nodeRef={daysTransRef}
+        in={edit === EDIT_DAY}
+        timeout={FADE_MILLI}
+        classNames="transition-fade"
+        unmountOnExit
+        mountOnEnter
+      >
+        <div ref={daysTransRef} className="day__picker--calendar">
+          <div className="day__picker--calendar-header">
+            <button className="day__picker--calendar-prev" onClick={onPrev}>
+              <i className="day__picker--calendar-control control-prev" />
+            </button>
+            <button onClick={onMonth} className="day__picker--calendar-current">
+              {`${MONTHS_LONG[month]} ${year}`}
+            </button>
+            <button className="day__picker--calendar-next" onClick={onNext}>
+              <i className="day__picker--calendar-control control-next" />
+            </button>
+          </div>
+          <div className="day__picker--calendar-weeks">
+            <Weekdays />
+            <Days
+              value={value}
+              today={today}
+              active={active}
+              year={year}
+              month={month}
+              markedDates={markedDates}
+              onDayClick={onDayClicked}
+            />
+          </div>
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        nodeRef={monthsTransRef}
+        in={edit === EDIT_MONTH}
+        timeout={FADE_MILLI}
+        classNames="transition-fade"
+        unmountOnExit
+        mountOnEnter
+      >
+        <div className="day__picker--transition" ref={monthsTransRef}>
+          <div className="day__picker--months">
+            {
+              MONTHS_SHORT.map((month) => (
+                <div
+                  key={`month-${month}`}
+                  className="day__picker--months-card"
+                >
+                  <div className="day__picker--months-month">{month}</div>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </CSSTransition>
+    </>
   )
 };
 
 Calendar.defaultProps = {
   value: new Date(),
-  // initial: new Date(2020, 1, 25),
   initialDate: new Date(),
   today: undefined,
   onDayClick: () => {},
+  onMonth: () => {},
+  edit: EDIT_DAY,
 };
 
 Calendar.propTypes = {
@@ -82,6 +124,8 @@ Calendar.propTypes = {
   initialDate: PropTypes.instanceOf(Date),
   today: PropTypes.objectOf(PropTypes.any),
   onDayClick: PropTypes.func,
+  onMonth: PropTypes.func,
+  edit: PropTypes.string,
 };
 
 export default Calendar;

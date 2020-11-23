@@ -1,0 +1,55 @@
+$fade: 0.5s;
+
+@keyframes transition-fadeIn {
+  0% {
+      opacity: 0.0;       
+  }
+  100% {
+      opacity: 1; 
+  }       
+}
+
+@keyframes transition-fadeOut {
+  0% {
+      opacity: 1;       
+  }
+  100% {
+      opacity: 0.0; 
+  }       
+}
+
+.transition-fade-appear {
+  &.transition-fade-appear-active {
+    animation-name: transition-fadeIn;
+    animation-duration: $fade;   
+    animation-timing-function: ease-in-out; 
+    visibility: visible !important; 
+  }
+}
+
+.transition-fade-enter {
+  opacity: 0;
+  transition: all $fade ease-in-out;
+  &.transition-fade-enter-active {
+    opacity: 1;
+    transition: all $fade ease-in-out;
+    // position: absolute;
+  }
+  &-done {
+    opacity: 1;
+  }
+}
+
+.transition-fade-exit {
+  opacity: 1;
+  transition: all $fade ease-in-out;
+  &.transition-fade-exit-active {
+    opacity: 0;
+    transition: all $fade ease-in-out;
+    // position: absolute;
+  }
+}
+
+:export {
+  animationFade: $fade;
+}
