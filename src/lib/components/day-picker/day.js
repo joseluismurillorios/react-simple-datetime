@@ -8,9 +8,13 @@ const Day = ({
   year,
   month,
   selected,
+  markedDates,
   onClick,
 }) => {
+  const currDay = day && `${day + 100}`.substring(1);
+  const currMonth = month && `${month + 100}`.substring(1);
   const datestring = `${year}-${month}-${day}`;
+  const formattedstring = `${year}-${currMonth}-${currDay}`;
   const active = today.formatted === datestring;
   const current = selected === datestring;
   const activeClass = active ? 'today' : '';
@@ -18,12 +22,22 @@ const Day = ({
   const onTap = () => {
     onClick(new Date(year, month, day, 0, 0));
   };
+  const marked = markedDates[formattedstring];
+  console.log(marked, datestring, formattedstring);
   return (
     <button
       className={`day__picker--calendar-day ${activeClass} ${currentClass} ${className}`}
       onClick={onTap}
+      data-key={datestring}
     >
-      {day}
+      <span>{day}</span>
+      <span className="day__picker--calendar-dots">
+        {
+          marked && (
+            <span className={`day__picker--calendar-dot ${currentClass}`} />
+          )
+        }
+      </span>
     </button>
   )
 };
@@ -34,6 +48,7 @@ Day.defaultProps = {
   today: {},
   year: undefined,
   month: undefined,
+  markedDates: {},
 };
 
 Day.propTypes = {
@@ -42,6 +57,7 @@ Day.propTypes = {
   today: PropTypes.objectOf(PropTypes.any),
   year: PropTypes.number,
   month: PropTypes.number,
+  markedDates: PropTypes.objectOf(PropTypes.any),
 };
 
 export default Day

@@ -15,6 +15,8 @@ export const MONTHS_LONG = [
 ];
 export const WEEKDAYS_SHORT = ['Sun', 'Mon', 'Tue', 'Wen', 'Thu', 'Fri', 'Sat'];
 
+export const padZero = (n) => `${n + 100}`.substring(1);
+
 export const getDateParams = (date = new Date()) => {
   const year = date.getFullYear();
   const month = date.getMonth();

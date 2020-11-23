@@ -6,11 +6,12 @@ import Weekdays from './weekdays';
 
 const Calendar = ({
   value,
-  initial,
+  initialDate,
   today,
+  markedDates,
   onDayClick,
 }) => {
-  const [active, setActive] = useState(new Date(initial.setDate(1)));
+  const [active, setActive] = useState(new Date(initialDate.setDate(1)));
 
   const onNext = () => {
     const {
@@ -45,7 +46,15 @@ const Calendar = ({
       </div>
       <div className="day__picker--calendar-weeks">
         <Weekdays />
-        <Days value={value} today={today} active={active} year={year} month={month} onDayClick={onDayClick} />
+        <Days
+          value={value}
+          today={today}
+          active={active}
+          year={year}
+          month={month}
+          markedDates={markedDates}
+          onDayClick={onDayClick}
+        />
       </div>
     </div>
   )
@@ -54,14 +63,14 @@ const Calendar = ({
 Calendar.defaultProps = {
   value: new Date(),
   // initial: new Date(2020, 1, 25),
-  initial: new Date(),
+  initialDate: new Date(),
   today: undefined,
   onDayClick: () => {},
 };
 
 Calendar.propTypes = {
   value: PropTypes.instanceOf(Date),
-  initial: PropTypes.instanceOf(Date),
+  initialDate: PropTypes.instanceOf(Date),
   today: PropTypes.objectOf(PropTypes.any),
   onDayClick: PropTypes.func,
 };

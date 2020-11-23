@@ -9,6 +9,7 @@ const Days = ({
   active,
   year,
   month,
+  markedDates,
   onDayClick,
 }) => {
   const {
@@ -21,6 +22,7 @@ const Days = ({
   } = getDateParams(value);
   // const month = active.getMonth();
   // const year = active.getFullYear();
+  console.log({ markedDates });
   return (
     <div className="day__picker--calendar-days">
       {
@@ -30,8 +32,9 @@ const Days = ({
             className="prev-day"
             day={day}
             today={today}
-            // month={(month - 1) % 12}
-            // year={year}
+            month={(month - 1) % 12}
+            year={year}
+            markedDates={markedDates}
           />
         ))
       }
@@ -45,6 +48,7 @@ const Days = ({
             year={year}
             selected={formatted}
             onClick={onDayClick}
+            markedDates={markedDates}
           />
         ))
       }
@@ -55,8 +59,9 @@ const Days = ({
             className="next-day"
             day={day}
             today={today}
-            // month={(month + 1) % 12}
-            // year={year}
+            month={(month + 1) % 12}
+            year={year}
+            markedDates={markedDates}
           />
         ))
       }

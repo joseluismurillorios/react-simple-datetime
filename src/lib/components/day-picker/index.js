@@ -8,7 +8,8 @@ import { getDateParams } from './utils';
 
 const DayPicker = ({
   value,
-  initial,
+  initialDate,
+  markedDates,
   onChange,
 }) => {
   const todayDate = useRef(getDateParams()).current;
@@ -35,8 +36,9 @@ const DayPicker = ({
           <Calendar
             value={selectedDate}
             today={todayDate}
-            initial={initial}
+            initialDate={initialDate}
             onDayClick={setSelectedDate}
+            markedDates={markedDates}
           />
         </div>
       </div>
@@ -46,15 +48,21 @@ const DayPicker = ({
 
 DayPicker.defaultProps = {
   // value: new Date(),
-  value: new Date(2020, 10, 25),
-  initial: new Date(),
+  value: new Date(2020, 10, 26),
+  initialDate: new Date(),
   onChange: () => {},
+  markedDates: {
+    '2020-10-31': true,
+    '2020-10-09': true,
+    '2020-09-30': true,
+  },
 };
 
 DayPicker.propTypes = {
   value: PropTypes.instanceOf(Date),
-  initial: PropTypes.instanceOf(Date),
+  initialDate: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
+  markedDates: PropTypes.objectOf(PropTypes.any),
 };
 
 export default DayPicker;
