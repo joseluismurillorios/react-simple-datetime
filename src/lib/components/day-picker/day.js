@@ -23,7 +23,6 @@ const Day = ({
     onClick(new Date(year, month, day, 0, 0));
   };
   const marked = markedDates[formattedstring];
-  console.log(marked, datestring, formattedstring);
   return (
     <button
       className={`day__picker--calendar-day ${activeClass} ${currentClass} ${className}`}
