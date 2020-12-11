@@ -17,7 +17,7 @@ import './transitions.scss';
 import './style.scss';
 
 const HourPicker = ({
-  id = Date.now().toString(16),
+  id,
   value = new Date(),
   onChange,
   onConfirm,
@@ -88,7 +88,7 @@ const HourPicker = ({
   }, [onChange]);
 
   return (
-    <div className="hour__picker">
+    <div id={id} className="hour__picker">
       <div className="hour__picker--main">
         <Display
           hours={hours}

@@ -5,7 +5,9 @@ const today = new Date();
 
 const App = () => (
   <div>
-    <DayPicker />
+    <DayPicker
+      controls
+    />
     {/* <HourPicker controls value={new Date()} /> */}
     <HourPicker
       controls

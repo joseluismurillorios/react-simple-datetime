@@ -6,12 +6,17 @@ import Display from './display';
 import Calendar from './calendar';
 import { getDateParams } from './utils';
 import { EDIT_DAY, EDIT_MONTH, EDIT_YEAR } from './constants';
+import Controls from './controls';
 
 const DayPicker = ({
+  id,
   value,
   initialDate,
   markedDates,
   onChange,
+  onCancel,
+  onConfirm,
+  controls,
 }) => {
   const todayDate = useRef(getDateParams()).current;
   const [selectedDate, setSelectedDate] = useState(value);
@@ -23,15 +28,26 @@ const DayPicker = ({
     day,
     weekday,
   } = getDateParams(selectedDate);
+
+  const onFinish = () => {
+    console.log('onFinish', selectedDate.toLocaleDateString());
+    onConfirm({
+      name: id,
+      value: selectedDate,
+    });
+  }
+
   useEffect(() => {
     console.log('onChange', selectedDate);
     onChangeRef.current(selectedDate);
   }, [selectedDate]);
+
   useEffect(() => {
     onChangeRef.current = onChange;
   }, [onChange]);
+
   return (
-    <div className="day__picker">
+    <div id={id} className="day__picker">
       <div className="day__picker--main">
         <Display
           month={month}
@@ -62,27 +78,43 @@ const DayPicker = ({
           />
         </div>
       </div>
+      {
+        controls && (
+          <Controls
+            onConfirm={onFinish}
+            onCancel={onCancel}
+          />
+        )
+      }
     </div>
   );
 };
 
 DayPicker.defaultProps = {
   // value: new Date(),
+  id: '',
   value: new Date(2020, 10, 26),
   initialDate: new Date(),
   onChange: () => {},
+  onCancel: () => {},
+  onConfirm: () => {},
   markedDates: {
     '2020-10-25': true,
     '2020-10-09': true,
     '2020-09-30': true,
   },
+  controls: false,
 };
 
 DayPicker.propTypes = {
+  id: PropTypes.string,
   value: PropTypes.instanceOf(Date),
   initialDate: PropTypes.instanceOf(Date),
   onChange: PropTypes.func,
+  onCancel: PropTypes.func,
+  onConfirm: PropTypes.func,
   markedDates: PropTypes.objectOf(PropTypes.any),
+  controls: PropTypes.bool,
 };
 
 export default DayPicker;
