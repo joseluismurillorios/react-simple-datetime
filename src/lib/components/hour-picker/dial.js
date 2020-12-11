@@ -13,6 +13,7 @@ const Dial = ({
   radius,
   divisions,
   onChange,
+  onUpdate,
   round,
   pad,
   adder,
@@ -21,8 +22,10 @@ const Dial = ({
   active,
 }) => {
   const svgRef = useRef(null);
+  const valRef = useRef(null);
 
   const onSet = useCallback((val) => {
+    valRef.current = val;
     onChange(val);
   }, [onChange]);
 
@@ -57,7 +60,8 @@ const Dial = ({
   const onUp = useCallback(() => {
     svgRef.current.removeEventListener('mousemove', onMove);
     svgRef.current.removeEventListener('touchmove', onMove);
-  }, [onMove]);
+    onUpdate(valRef.current);
+  }, [onMove, onUpdate]);
 
   const onContext = (e) => {
     e.preventDefault();
@@ -115,6 +119,7 @@ Dial.defaultProps = {
   radius: RADIUS,
   divisions: DIVISIONS,
   onChange: () => {},
+  onUpdate: () => {},
   onNumTap: () => {},
   round: 30,
   pad: 3,
@@ -130,6 +135,7 @@ Dial.propTypes = {
   radius: PropTypes.number,
   divisions: PropTypes.number,
   onChange: PropTypes.func,
+  onUpdate: PropTypes.func,
   onNumTap: PropTypes.func,
   round: PropTypes.number,
   pad: PropTypes.number,

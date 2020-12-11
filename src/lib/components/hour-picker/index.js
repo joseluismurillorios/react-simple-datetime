@@ -23,6 +23,8 @@ const HourPicker = ({
   onConfirm,
   onCancel,
   controls,
+  autoToggle,
+  initialEdit,
 }) => {
   const hourTransRef = useRef(null);
   const minuteTransRef = useRef(null);
@@ -33,11 +35,14 @@ const HourPicker = ({
   const [hours, setHrs] = useState(parse24hours(value.getHours()));
   const [minutes, setMin] = useState(value.getMinutes());
 
-  const [edit, setEdit] = useState(EDIT_HOURS);
+  const [edit, setEdit] = useState(initialEdit);
 
   const onHourChange = useCallback((val) => {
     const adder = am ? 0 : 12;
     setHrs(parse24hours(val + adder));
+    // if (autoToggle) {
+    //   setEdit(EDIT_MINUTES);
+    // }
   }, [am]);
 
   const onMinuteChange = useCallback((val) => {
@@ -52,6 +57,12 @@ const HourPicker = ({
       setHrs(12);
     }
   }, [hours]);
+
+  const onHourUpdate = useCallback(() => {
+    if (autoToggle) {
+      setEdit(EDIT_MINUTES);
+    }
+  }, [autoToggle]);
 
   const onFinish = () => {
     console.log('onFinish', initialValue.current.toLocaleTimeString());
@@ -101,6 +112,7 @@ const HourPicker = ({
                 className="dial-hours"
                 hour={hours}
                 onChange={onHourChange}
+                onUpdate={onHourUpdate}
                 round={30}
                 pad={3}
                 adder={1}
@@ -151,6 +163,8 @@ HourPicker.defaultProps = {
   onConfirm: () => {},
   onCancel: () => {},
   controls: false,
+  autoToggle: false,
+  initialEdit: EDIT_HOURS,
 };
 
 HourPicker.propTypes = {
@@ -160,6 +174,8 @@ HourPicker.propTypes = {
   onConfirm: PropTypes.func,
   onCancel: PropTypes.func,
   controls: PropTypes.bool,
+  autoToggle: PropTypes.bool,
+  initialEdit: PropTypes.string,
 };
 
 export default HourPicker;
