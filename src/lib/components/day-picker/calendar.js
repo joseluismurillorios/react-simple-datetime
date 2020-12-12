@@ -4,7 +4,8 @@ import { getDateParams, MONTHS_LONG, MONTHS_SHORT } from './utils';
 import Days from './days';
 import Weekdays from './weekdays';
 import { CSSTransition } from 'react-transition-group';
-import { EDIT_DAY, EDIT_MONTH, FADE_MILLI } from './constants';
+import { EDIT_DAY, EDIT_MONTH, EDIT_YEAR, FADE_MILLI } from './constants';
+import Year from './year';
 
 const Calendar = ({
   value,
@@ -15,9 +16,12 @@ const Calendar = ({
   onDayClick,
   onMonth,
   onDate,
+  onYear,
+  live,
 }) => {
   const daysTransRef = useRef(null);
   const monthsTransRef = useRef(null);
+  const yearsTransRef = useRef(null);
   const [active, setActive] = useState(new Date(initialDate.setDate(1)));
 
   const month = active.getMonth();
@@ -35,6 +39,18 @@ const Calendar = ({
   const onMonthClicked = (m) => {
     const newValue = new Date(year, m, 1, 0, 0);
     setActive(newValue);
+    if (live) {
+      onDayClick(newValue);
+    }
+    onDate();
+  };
+
+  const onYearClicked = (y) => {
+    const newValue = new Date(y, month, 1, 0, 0);
+    setActive(newValue);
+    if (live) {
+      onDayClick(newValue);
+    }
     onDate();
   };
 
@@ -70,9 +86,17 @@ const Calendar = ({
               <button className="day__picker--calendar-prev" onClick={onPrev}>
                 <i className="day__picker--calendar-control control-prev" />
               </button>
-              <button onClick={onMonth} className="day__picker--calendar-current">
+              {/* <button onClick={onMonth} className="day__picker--calendar-current">
                 {`${MONTHS_LONG[month]} ${year}`}
-              </button>
+              </button> */}
+              <div className="day__picker--calendar-current">
+                <button type="button" onClick={onMonth}>
+                  {MONTHS_LONG[month]}
+                </button>
+                <button type="button" onClick={onYear}>
+                  {year}
+                </button>                
+              </div>
               <button className="day__picker--calendar-next" onClick={onNext}>
                 <i className="day__picker--calendar-control control-next" />
               </button>
@@ -102,18 +126,48 @@ const Calendar = ({
       >
         <div className="day__picker--transition" ref={monthsTransRef}>
           <div className={`day__picker--months ${edit === EDIT_MONTH ? 'active' : ''}`}>
-            {
-              MONTHS_SHORT.map((month, i) => (
-                <button
-                  key={`month-${month}`}
-                  className="day__picker--months-card"
-                  onClick={() => { onMonthClicked(i); }}
-                >
-                  <div className="day__picker--months-month">{month}</div>
-                </button>
-              ))
-            }
+            <div className="day__picker--months-header">
+              <button className="day__picker--months-prev" onClick={onPrev}>
+                <i className="day__picker--months-control control-prev" />
+              </button>
+              <button onClick={onDate} className="day__picker--months-current">
+                {MONTHS_LONG[month]}
+              </button>
+              <button className="day__picker--months-next" onClick={onNext}>
+                <i className="day__picker--months-control control-next" />
+              </button>
+            </div>
+            <div className="day__picker--months-list">
+              {
+                MONTHS_SHORT.map((m, i) => (
+                  <button
+                    key={`month-${m}`}
+                    className={`day__picker--months-card ${month === i ? 'active' : ''}`}
+                    onClick={() => { onMonthClicked(i); }}
+                  >
+                    <div className="day__picker--months-month">{m}</div>
+                  </button>
+                ))
+              }
+            </div>
           </div>
+        </div>
+      </CSSTransition>
+      <CSSTransition
+        nodeRef={yearsTransRef}
+        in={edit === EDIT_YEAR}
+        timeout={FADE_MILLI}
+        classNames="transition-fade"
+        unmountOnExit
+        mountOnEnter
+      >
+        <div className="day__picker--transition" ref={yearsTransRef}>
+          <Year
+            year={year}
+            active={edit === EDIT_YEAR}
+            onDate={onDate}
+            onYearClicked={onYearClicked}
+          />
         </div>
       </CSSTransition>
     </>
@@ -127,7 +181,9 @@ Calendar.defaultProps = {
   onDayClick: () => {},
   onMonth: () => {},
   onDate: () => {},
+  onYear: () => {},
   edit: EDIT_DAY,
+  live: false,
 };
 
 Calendar.propTypes = {
@@ -137,7 +193,9 @@ Calendar.propTypes = {
   onDayClick: PropTypes.func,
   onMonth: PropTypes.func,
   onDate: PropTypes.func,
+  onYear: PropTypes.func,
   edit: PropTypes.string,
+  live: PropTypes.bool,
 };
 
 export default Calendar;

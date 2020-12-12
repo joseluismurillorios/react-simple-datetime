@@ -7,6 +7,7 @@ const App = () => (
   <div>
     <DayPicker
       controls
+      live
     />
     {/* <HourPicker controls value={new Date()} /> */}
     <HourPicker
