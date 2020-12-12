@@ -8,10 +8,11 @@ import { getDateParams } from './utils';
 import { EDIT_DAY, EDIT_MONTH, EDIT_YEAR } from './constants';
 import Controls from './controls';
 
+const sortArray = (arr) => [...arr].sort((a, b) => a.getTime() - b.getTime());
+
 const DayPicker = ({
   id,
   value,
-  initialDate,
   markedDates,
   onChange,
   onCancel,
@@ -19,27 +20,45 @@ const DayPicker = ({
   controls,
   live,
 }) => {
+  const isRange = Array.isArray(value);
   const todayDate = useRef(getDateParams()).current;
-  const [selectedDate, setSelectedDate] = useState(value);
+  const [selectedDate, setSelectedDate] = useState(isRange ? sortArray(value) : value);
   const [edit, setEdit] = useState(EDIT_DAY);
+  const [editRange, setEditRange] = useState(0);
   const onChangeRef = useRef(onChange);
   const {
     month,
     year,
     day,
     weekday,
-  } = getDateParams(selectedDate);
+  } = getDateParams(isRange ? selectedDate[editRange] : selectedDate);
 
   const onFinish = () => {
-    console.log('onFinish', selectedDate.toLocaleDateString());
     onConfirm({
       name: id,
       value: selectedDate,
     });
   }
 
+  const onReset = () => {
+    const newValue = new Date(todayDate.year, todayDate.month, todayDate.day, 0, 0);
+    const val = isRange ? [newValue, newValue] : newValue;
+    setSelectedDate(val);
+    setEditRange(1);
+  };
+
+  const onDay = (e) => {
+    if (isRange) {
+      const [a] = selectedDate;
+      const val = sortArray(editRange === 0 ? [e, e] : [a, e]);
+      setSelectedDate(val);
+      setEditRange(editRange === 0 ? 1 : 0);
+    } else {
+      setSelectedDate(e);
+    }
+  };
+
   useEffect(() => {
-    console.log('onChange', selectedDate);
     onChangeRef.current(selectedDate);
   }, [selectedDate]);
 
@@ -51,6 +70,7 @@ const DayPicker = ({
     <div id={id} className="day__picker">
       <div className="day__picker--main">
         <Display
+          value={selectedDate}
           month={month}
           year={year}
           day={day}
@@ -61,20 +81,16 @@ const DayPicker = ({
           onDate={() => {
             setEdit(EDIT_DAY)
           }}
-          onReset={() => {
-            console.log(todayDate)
-            const newValue = new Date(todayDate.year, todayDate.month, todayDate.day, 0, 0);
-            setSelectedDate(newValue);
-          }}
+          onReset={onReset}
         />
         <div className="day__picker--wrapper">
           <Calendar
             value={selectedDate}
             today={todayDate}
-            initialDate={initialDate}
-            onDayClick={setSelectedDate}
+            onDayClick={onDay}
             markedDates={markedDates}
             edit={edit}
+            editRange={editRange}
             onMonth={() => {
               setEdit(EDIT_MONTH)
             }}
@@ -101,10 +117,8 @@ const DayPicker = ({
 };
 
 DayPicker.defaultProps = {
-  // value: new Date(),
   id: '',
   value: new Date(),
-  initialDate: new Date(),
   onChange: () => {},
   onCancel: () => {},
   onConfirm: () => {},
@@ -119,8 +133,10 @@ DayPicker.defaultProps = {
 
 DayPicker.propTypes = {
   id: PropTypes.string,
-  value: PropTypes.instanceOf(Date),
-  initialDate: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([
+    PropTypes.instanceOf(Date),
+    PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+  ]),
   onChange: PropTypes.func,
   onCancel: PropTypes.func,
   onConfirm: PropTypes.func,

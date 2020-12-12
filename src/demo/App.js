@@ -7,7 +7,14 @@ const App = () => (
   <div>
     <DayPicker
       controls
-      live
+      // live
+      // value={today}
+      value={[new Date(2020,11,20,0,0), new Date(2020,11,12,0,0)]}
+      onConfirm={(e) => {
+        console.log(e)
+        // console.log('0', e[0])
+        // console.log('1', e[1])
+      }}
     />
     {/* <HourPicker controls value={new Date()} /> */}
     <HourPicker

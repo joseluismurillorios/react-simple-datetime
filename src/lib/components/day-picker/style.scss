@@ -12,6 +12,7 @@
 
   * {
     user-select: none;
+    box-sizing: border-box;
   }
 
   button {
@@ -62,6 +63,7 @@
     }
     &-current {
       display: flex;
+      margin-bottom: 4px;
     }
     &-year, &-month, &-day, &-weekday {
       font-weight: 400;
@@ -80,7 +82,7 @@
       color: $light;
     }
     &-year {
-      position: absolute;
+      // position: absolute;
       bottom: 100%;
       color: $light;
     }
@@ -175,16 +177,19 @@
       display: flex;
       flex-wrap: wrap;
       padding: 4px;
+      > button {
+        border: 1px solid transparent;
+      }
     }
     &-day {
       font-size: 0.9rem;
       width: calc(100% / 7);
       text-align: center;
-      min-height: 36px;
       cursor: pointer;
       color: $dark;
       box-sizing: border-box;
       position: relative;
+      min-height: 36px;
       padding: 6px 0;
       &.today {
         background-color: rgba(255, 255, 255, 0.6);
@@ -192,14 +197,28 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
+      &.active {
+        background-color: $color-100;
+        border: 1px solid $color-100;
+        &.today {
+          // background-color: rgba(197, 202, 233, 0.8);
+          border: 1px solid rgba(63, 81, 181, 0.1);
+        }
+      }
       &.selected {
         background-color: $color-500;
         color: $light;
+        border: 1px solid $color-500;
+        &.today {
+          background-color: $color-500;
+          color: $light;
+        }
       }
       &.prev-day, &.next-day {
         color: $color-200;
         &.selected {
           background-color: $color-100;
+          border: 1px solid $color-200;
           // color: $light;
         }
       }

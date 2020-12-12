@@ -7,10 +7,12 @@ import { CSSTransition } from 'react-transition-group';
 import { EDIT_DAY, EDIT_MONTH, EDIT_YEAR, FADE_MILLI } from './constants';
 import Year from './year';
 
+const getDateValue = (isRange, value, editRange) => new Date(isRange ? value[editRange] : value);
+
 const Calendar = ({
   value,
   edit,
-  initialDate,
+  editRange,
   today,
   markedDates,
   onDayClick,
@@ -19,10 +21,11 @@ const Calendar = ({
   onYear,
   live,
 }) => {
+  const isRange = Array.isArray(value);
   const daysTransRef = useRef(null);
   const monthsTransRef = useRef(null);
   const yearsTransRef = useRef(null);
-  const [active, setActive] = useState(new Date((initialDate || value).setDate(1)));
+  const [active, setActive] = useState(new Date(getDateValue(isRange, value, editRange).setDate(1)));
 
   const month = active.getMonth();
   const year = active.getFullYear();
@@ -30,10 +33,6 @@ const Calendar = ({
   const onDayClicked = (y, m, d) => {
     const newValue = new Date(y, m, d, 0, 0);
     onDayClick(newValue);
-    // if (m !== month || y !== year) {
-    //   console.log({ m, month, y, year });
-    //   setActive(new Date(y, m, 1, 0, 0));
-    // }
   };
 
   const onMonthClicked = (m) => {
@@ -70,11 +69,9 @@ const Calendar = ({
     setActive(new Date(year, month - 1, 1, 0, 0));
   };
 
-  useEffect(() => {
-    console.log('value', value);
-    const newActive = new Date(new Date(value).setDate(1));
-    setActive(newActive);
-  }, [value]);
+  // useEffect(() => {
+  //   setActive(new Date(getDateValue(isRange, value, editRange).setDate(1)));
+  // }, [value, isRange, editRange]);
 
   return (
     <>
@@ -111,6 +108,7 @@ const Calendar = ({
               <Weekdays />
               <Days
                 value={value}
+                editRange={editRange}
                 today={today}
                 active={active}
                 year={year}
@@ -182,7 +180,6 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   value: new Date(),
-  initialDate: undefined,
   today: undefined,
   onDayClick: () => {},
   onMonth: () => {},
@@ -193,8 +190,10 @@ Calendar.defaultProps = {
 };
 
 Calendar.propTypes = {
-  value: PropTypes.instanceOf(Date),
-  initialDate: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.instanceOf(Date)),
+    PropTypes.instanceOf(Date),
+  ]),
   today: PropTypes.objectOf(PropTypes.any),
   onDayClick: PropTypes.func,
   onMonth: PropTypes.func,

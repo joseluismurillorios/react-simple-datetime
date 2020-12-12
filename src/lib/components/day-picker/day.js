@@ -8,6 +8,7 @@ const Day = ({
   year,
   month,
   selected,
+  active,
   markedDates,
   onClick,
 }) => {
@@ -15,17 +16,18 @@ const Day = ({
   const currMonth = month && `${month + 100}`.substring(1);
   const datestring = `${year}-${month}-${day}`;
   const formattedstring = `${year}-${currMonth}-${currDay}`;
-  const active = today.formatted === datestring;
-  const current = selected === datestring;
-  const activeClass = active ? 'today' : '';
-  const currentClass = current ? 'selected' : '';
+  const now = today.formatted === datestring;
+  // const current = selected === datestring;
+  const nowClass = now ? 'today' : '';
+  const currentClass = selected ? 'selected' : '';
+  const activeClass = active ? 'active' : '';
   const onTap = () => {
     onClick(year, month, day);
   };
   const marked = markedDates[formattedstring];
   return (
     <button
-      className={`day__picker--calendar-day ${activeClass} ${currentClass} ${className}`}
+      className={`day__picker--calendar-day ${nowClass} ${currentClass} ${activeClass} ${className}`}
       onClick={onTap}
       data-key={datestring}
     >
