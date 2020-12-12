@@ -17,6 +17,7 @@ const DayPicker = ({
   onCancel,
   onConfirm,
   controls,
+  live,
 }) => {
   const todayDate = useRef(getDateParams()).current;
   const [selectedDate, setSelectedDate] = useState(value);
@@ -75,6 +76,7 @@ const DayPicker = ({
             onDate={() => {
               setEdit(EDIT_DAY)
             }}
+            live={live}
           />
         </div>
       </div>
@@ -104,6 +106,7 @@ DayPicker.defaultProps = {
     '2020-09-30': true,
   },
   controls: false,
+  live: false,
 };
 
 DayPicker.propTypes = {
@@ -115,6 +118,7 @@ DayPicker.propTypes = {
   onConfirm: PropTypes.func,
   markedDates: PropTypes.objectOf(PropTypes.any),
   controls: PropTypes.bool,
+  live: PropTypes.bool,
 };
 
 export default DayPicker;
