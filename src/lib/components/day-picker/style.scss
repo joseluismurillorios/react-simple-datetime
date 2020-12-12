@@ -45,6 +45,7 @@
     background-color: $color-600;
     color: $color-50;
     padding: 24px 0;
+    position: relative;
 
     flex: 1;
     justify-content: center;
@@ -82,6 +83,24 @@
       position: absolute;
       bottom: 100%;
       color: $light;
+    }
+
+    &-reset {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      button {
+        text-transform: uppercase;
+        border: 1px solid $color-200;
+        color: $color-200;
+        font-size: 0.7rem;
+        letter-spacing: 1px;
+        border-radius: 4px;
+        cursor: pointer;
+        &:hover {
+          background-color: $color-500;
+        }
+      }
     }
   }
 

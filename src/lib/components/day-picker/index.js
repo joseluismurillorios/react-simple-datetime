@@ -61,6 +61,11 @@ const DayPicker = ({
           onDate={() => {
             setEdit(EDIT_DAY)
           }}
+          onReset={() => {
+            console.log(todayDate)
+            const newValue = new Date(todayDate.year, todayDate.month, todayDate.day, 0, 0);
+            setSelectedDate(newValue);
+          }}
         />
         <div className="day__picker--wrapper">
           <Calendar
@@ -98,7 +103,7 @@ const DayPicker = ({
 DayPicker.defaultProps = {
   // value: new Date(),
   id: '',
-  value: new Date(2020, 10, 26),
+  value: new Date(),
   initialDate: new Date(),
   onChange: () => {},
   onCancel: () => {},

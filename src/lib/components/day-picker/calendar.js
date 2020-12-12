@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import { getDateParams, MONTHS_LONG, MONTHS_SHORT } from './utils';
 import Days from './days';
@@ -22,7 +22,7 @@ const Calendar = ({
   const daysTransRef = useRef(null);
   const monthsTransRef = useRef(null);
   const yearsTransRef = useRef(null);
-  const [active, setActive] = useState(new Date(initialDate.setDate(1)));
+  const [active, setActive] = useState(new Date((initialDate || value).setDate(1)));
 
   const month = active.getMonth();
   const year = active.getFullYear();
@@ -69,6 +69,12 @@ const Calendar = ({
     } = getDateParams(active);
     setActive(new Date(year, month - 1, 1, 0, 0));
   };
+
+  useEffect(() => {
+    console.log('value', value);
+    const newActive = new Date(new Date(value).setDate(1));
+    setActive(newActive);
+  }, [value]);
 
   return (
     <>
@@ -176,7 +182,7 @@ const Calendar = ({
 
 Calendar.defaultProps = {
   value: new Date(),
-  initialDate: new Date(),
+  initialDate: undefined,
   today: undefined,
   onDayClick: () => {},
   onMonth: () => {},
