@@ -16,6 +16,7 @@ const Calendar = ({
   onDayClick,
   onMonth,
   onDate,
+  onYear,
   live,
 }) => {
   const daysTransRef = useRef(null);
@@ -85,9 +86,17 @@ const Calendar = ({
               <button className="day__picker--calendar-prev" onClick={onPrev}>
                 <i className="day__picker--calendar-control control-prev" />
               </button>
-              <button onClick={onMonth} className="day__picker--calendar-current">
+              {/* <button onClick={onMonth} className="day__picker--calendar-current">
                 {`${MONTHS_LONG[month]} ${year}`}
-              </button>
+              </button> */}
+              <div className="day__picker--calendar-current">
+                <button type="button" onClick={onMonth}>
+                  {MONTHS_LONG[month]}
+                </button>
+                <button type="button" onClick={onYear}>
+                  {year}
+                </button>                
+              </div>
               <button className="day__picker--calendar-next" onClick={onNext}>
                 <i className="day__picker--calendar-control control-next" />
               </button>
@@ -159,6 +168,7 @@ Calendar.defaultProps = {
   onDayClick: () => {},
   onMonth: () => {},
   onDate: () => {},
+  onYear: () => {},
   edit: EDIT_DAY,
   live: false,
 };
@@ -170,6 +180,7 @@ Calendar.propTypes = {
   onDayClick: PropTypes.func,
   onMonth: PropTypes.func,
   onDate: PropTypes.func,
+  onYear: PropTypes.func,
   edit: PropTypes.string,
   live: PropTypes.bool,
 };

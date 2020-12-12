@@ -76,6 +76,9 @@ const DayPicker = ({
             onDate={() => {
               setEdit(EDIT_DAY)
             }}
+            onYear={() => {
+              setEdit(EDIT_YEAR)
+            }}
             live={live}
           />
         </div>

@@ -107,6 +107,11 @@
       font-weight: 400;
       color: $dark;
       flex: 0 0 200px;
+      text-align: center;
+      button {
+        text-transform: uppercase;
+        cursor: pointer;
+      }
     }
     &-prev, &-next {
       width: 40px;
@@ -211,6 +216,7 @@
       border: 0;
       appearance: none;
       text-transform: uppercase;
+      cursor: pointer;
     }
   }
 
