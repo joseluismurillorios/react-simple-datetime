@@ -34,7 +34,6 @@ const DayPicker = ({
   } = getDateParams(isRange ? selectedDate[editRange] : selectedDate);
 
   const onFinish = () => {
-    console.log('onFinish', isRange ? selectedDate : selectedDate.toLocaleDateString());
     onConfirm({
       name: id,
       value: selectedDate,
@@ -45,26 +44,21 @@ const DayPicker = ({
     const newValue = new Date(todayDate.year, todayDate.month, todayDate.day, 0, 0);
     const val = isRange ? [newValue, newValue] : newValue;
     setSelectedDate(val);
-    // onChangeRef.current(val);
-    setEditRange(0);
+    setEditRange(1);
   };
 
   const onDay = (e) => {
     if (isRange) {
-      console.log(isRange, selectedDate);
       const [a] = selectedDate;
       const val = sortArray(editRange === 0 ? [e, e] : [a, e]);
       setSelectedDate(val);
-      // onChangeRef.current(val);
       setEditRange(editRange === 0 ? 1 : 0);
     } else {
       setSelectedDate(e);
-      // onChangeRef.current(e);
     }
   };
 
   useEffect(() => {
-    // console.log('onChange', selectedDate);
     onChangeRef.current(selectedDate);
   }, [selectedDate]);
 
@@ -76,6 +70,7 @@ const DayPicker = ({
     <div id={id} className="day__picker">
       <div className="day__picker--main">
         <Display
+          value={selectedDate}
           month={month}
           year={year}
           day={day}
@@ -122,9 +117,8 @@ const DayPicker = ({
 };
 
 DayPicker.defaultProps = {
-  // value: new Date(),
   id: '',
-  value: [new Date(2020,11,20,0,0), new Date(2020,11,12,0,0)],
+  value: new Date(),
   onChange: () => {},
   onCancel: () => {},
   onConfirm: () => {},
