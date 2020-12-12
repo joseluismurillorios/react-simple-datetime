@@ -1,0 +1,73 @@
+$fade: 0.25s;
+
+@keyframes transition-fadeIn {
+  0% {
+      opacity: 0.0;       
+  }
+  100% {
+      opacity: 1; 
+  }       
+}
+
+@keyframes transition-fadeOut {
+  0% {
+      opacity: 1;       
+  }
+  100% {
+      opacity: 0.0; 
+  }       
+}
+
+.modal-fade-appear {
+  &.modal-fade-appear-active {
+    animation-name: transition-fadeIn;
+    animation-duration: $fade;   
+    animation-timing-function: ease-in-out; 
+    visibility: visible !important; 
+  }
+}
+
+.modal-fade-enter {
+  opacity: 0;
+  transition: all $fade ease-in-out;
+  .modalpicker__wrapper {
+    transform: translateY(200px);
+    transition: all $fade ease-in-out;
+  }
+  &.modal-fade-enter-active {
+    opacity: 1;
+    transition: all $fade ease-in-out;
+    .modalpicker__wrapper {
+      transform: translateY(0px);
+      transition: all $fade ease-in-out;
+    }
+  }
+  &-done {
+    opacity: 1;
+    .modalpicker__wrapper {
+      transform: translateY(0px);
+      transition: all $fade ease-in-out;
+    }
+  }
+}
+
+.modal-fade-exit {
+  opacity: 1;
+  transition: all $fade ease-in-out;
+  .modalpicker__wrapper {
+    transform: translateY(0px);
+    transition: all $fade ease-in-out;
+  }
+  &.modal-fade-exit-active {
+    opacity: 0;
+    transition: all $fade ease-in-out;
+    .modalpicker__wrapper {
+      transform: translateY(200px);
+      transition: all $fade ease-in-out;
+    }
+  }
+}
+
+:export {
+  animationFade: $fade;
+}
