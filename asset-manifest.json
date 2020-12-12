@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/react-simple-datetime/static/css/main.911f92cb.css",
+    "main.js": "/react-simple-datetime/static/js/main.259504a2.js",
+    "main.js.map": "/react-simple-datetime/static/js/main.259504a2.js.map",
+    "index.html": "/react-simple-datetime/index.html",
+    "precache-manifest.f40b506d85dc48d8d6c901a13dcd2210.js": "/react-simple-datetime/precache-manifest.f40b506d85dc48d8d6c901a13dcd2210.js",
+    "service-worker.js": "/react-simple-datetime/service-worker.js",
+    "static/css/main.911f92cb.css.map": "/react-simple-datetime/static/css/main.911f92cb.css.map"
+  },
+  "entrypoints": [
+    "static/css/main.911f92cb.css",
+    "static/js/main.259504a2.js"
+  ]
+}
