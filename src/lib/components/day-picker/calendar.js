@@ -126,17 +126,30 @@ const Calendar = ({
       >
         <div className="day__picker--transition" ref={monthsTransRef}>
           <div className={`day__picker--months ${edit === EDIT_MONTH ? 'active' : ''}`}>
-            {
-              MONTHS_SHORT.map((m, i) => (
-                <button
-                  key={`month-${m}`}
-                  className={`day__picker--months-card ${month === i ? 'active' : ''}`}
-                  onClick={() => { onMonthClicked(i); }}
-                >
-                  <div className="day__picker--months-month">{m}</div>
-                </button>
-              ))
-            }
+            <div className="day__picker--months-header">
+              <button className="day__picker--months-prev" onClick={onPrev}>
+                <i className="day__picker--months-control control-prev" />
+              </button>
+              <button onClick={onDate} className="day__picker--months-current">
+                {MONTHS_LONG[month]}
+              </button>
+              <button className="day__picker--months-next" onClick={onNext}>
+                <i className="day__picker--months-control control-next" />
+              </button>
+            </div>
+            <div className="day__picker--months-list">
+              {
+                MONTHS_SHORT.map((m, i) => (
+                  <button
+                    key={`month-${m}`}
+                    className={`day__picker--months-card ${month === i ? 'active' : ''}`}
+                    onClick={() => { onMonthClicked(i); }}
+                  >
+                    <div className="day__picker--months-month">{m}</div>
+                  </button>
+                ))
+              }
+            </div>
           </div>
         </div>
       </CSSTransition>

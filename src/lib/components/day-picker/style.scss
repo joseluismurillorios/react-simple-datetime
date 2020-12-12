@@ -111,6 +111,9 @@
       button {
         text-transform: uppercase;
         cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: $dark;
       }
     }
     &-prev, &-next {
@@ -229,15 +232,20 @@
     // width: 100%;
     // height: 100%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-    flex-wrap: wrap;
+    flex-direction: column;
     transform: scale(1.2);
     transition: transform 0.7s ease-in-out;
     background-color: $color-50;
     &.active {
       transform: scale(1);
+    }
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1;
+      padding: 15px;
+      justify-content: center;
+      align-items: center;
     }
     &-card {
       width: 25%;
@@ -261,6 +269,30 @@
       border-radius: 8px;
       // border: 1px solid $color-100;
     }
+    &-header {
+      width: 100%;
+      height: 36px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      border-bottom: 1px solid $color-100;
+    }
+    &-current {
+      text-transform: uppercase;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: $dark;
+      flex: 0 0 200px;
+      text-align: center;
+      button {
+        font-size: 0.9rem;
+        font-weight: 400;
+        color: $dark;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+    }
   }
 
   &--years {
@@ -271,8 +303,19 @@
     bottom: 0;
     display: flex;
     flex-direction: column;
+    transform: scale(1.2);
+    transition: transform 0.7s ease-in-out;
+    background-color: $color-50;
     &.active {
       transform: scale(1);
+    }
+    &-list {
+      display: flex;
+      flex-wrap: wrap;
+      flex: 1;
+      padding: 15px;
+      justify-content: center;
+      align-items: center;
     }
     &-header {
       width: 100%;
@@ -307,12 +350,6 @@
       &.control-next {
         transform: rotate(-45deg);
       }
-    }
-    &-list {
-      display: flex;
-      flex-wrap: wrap;
-      flex: 1;
-      padding: 15px;
     }
     &-card {
       width: 25%;
