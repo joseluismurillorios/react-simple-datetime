@@ -192,6 +192,12 @@
       &:hover {
         background-color: rgba(255, 255, 255, 0.8);
       }
+      &.active {
+        background-color: $color-100;
+        // border: 1px solid $color-500;
+        border-left: 0;
+        border-right: 0;
+      }
       &.selected {
         background-color: $color-500;
         color: $light;

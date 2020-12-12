@@ -8,6 +8,10 @@ const App = () => (
     <DayPicker
       controls
       live
+      onChange={(e) => {
+        console.log('0', e[0])
+        console.log('1', e[1])
+      }}
     />
     {/* <HourPicker controls value={new Date()} /> */}
     <HourPicker
