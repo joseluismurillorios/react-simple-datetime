@@ -1,30 +1,46 @@
-import React from 'react';
-import { HourPicker, DayPicker } from '../lib';
+import React, { useState } from 'react';
+import { HourPicker, DayPicker, Modal } from '../lib';
 
 const today = new Date();
 
-const App = () => (
-  <div>
-    <DayPicker
-      controls
-      // live
-      // value={today}
-      value={[new Date(2020,11,20,0,0), new Date(2020,11,12,0,0)]}
-      onConfirm={(e) => {
-        console.log(e)
-        // console.log('0', e[0])
-        // console.log('1', e[1])
-      }}
-    />
-    {/* <HourPicker controls value={new Date()} /> */}
-    <HourPicker
-      controls
-      value={today}
-      // value={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 0, 0, 0)}
-      autoToggle
-    />
-    {/* <HourPicker controls value={new Date(today.getFullYear(), today.getMonth(), today.getDate(), 12, 0, 0)} /> */}
-  </div>
-);
+const App = () => {
+  const [modal, setModal] = useState(false);
+  const date = new Date();
+  return (
+    <div>
+      <DayPicker
+        controls
+        live
+        // value={today}
+        // value={[new Date(2020,11,20,0,0), new Date(2020,11,12,0,0)]}
+        onConfirm={(e) => {
+          console.log(e)
+        }}
+      />
+      <button onClick={() => setModal(true)}>Open</button>
+      <Modal
+        isVisible={modal}
+        toggleModal={() => setModal(false)}
+        value={date}
+        minValue={date}
+      >
+        <DayPicker
+          controls
+          value={[new Date(2020,11,20,0,0), new Date(2020,11,12,0,0)]}
+          onCancel={() => setModal(false)}
+          onConfirm={(e) => {
+            console.log(e);
+            setModal(false);
+          }}
+        />
+      </Modal>
+      <HourPicker
+        controls
+        value={today}
+        autoToggle
+      />
+    </div>
+  );
+}
 
 export default App;

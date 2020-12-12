@@ -75,11 +75,13 @@ const DayPicker = ({
           year={year}
           day={day}
           weekday={weekday}
+          editRange={editRange}
           onYear={() => {
             setEdit(EDIT_YEAR)
           }}
-          onDate={() => {
+          onDate={(e) => {
             setEdit(EDIT_DAY)
+            setEditRange(e);
           }}
           onReset={onReset}
         />

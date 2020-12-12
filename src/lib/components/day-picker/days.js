@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getDateParams, getMonthInfo } from './utils';
+import { getMonthInfo } from './utils';
 import Day from './day';
 
 const isInRange = (values, date) => {
@@ -11,7 +11,6 @@ const isInRange = (values, date) => {
 
 const Days = ({
   value,
-  editRange,
   today,
   active,
   year,

@@ -35,21 +35,25 @@ const Calendar = ({
     onDayClick(newValue);
   };
 
-  const onMonthClicked = (m) => {
-    const newValue = new Date(year, m, 1, 0, 0);
-    setActive(newValue);
+  const onLive = (y, month) => {
     if (live) {
-      onDayClick(newValue);
+      const date = getDateValue(isRange, value, editRange);
+      const day = date.getDate();
+      onDayClick(new Date(y, month, day, 0, 0));
     }
+  };
+
+  const onMonthClicked = (m) => {
+    // const newValue = new Date(year, m, 1, 0, 0);
+    setActive(new Date(year, m, 1, 0, 0));
+    onLive(year, m);
     onDate();
   };
 
   const onYearClicked = (y) => {
-    const newValue = new Date(y, month, 1, 0, 0);
-    setActive(newValue);
-    if (live) {
-      onDayClick(newValue);
-    }
+    // const newValue = new Date(y, month, 1, 0, 0);
+    setActive(new Date(y, month, 1, 0, 0));
+    onLive(y, month);
     onDate();
   };
 
@@ -69,9 +73,11 @@ const Calendar = ({
     setActive(new Date(year, month - 1, 1, 0, 0));
   };
 
-  // useEffect(() => {
-  //   setActive(new Date(getDateValue(isRange, value, editRange).setDate(1)));
-  // }, [value, isRange, editRange]);
+  useEffect(() => {
+    if (live) {
+      setActive(new Date(getDateValue(isRange, value, 1).setDate(1)));
+    }
+  }, [value, isRange, editRange, live]);
 
   return (
     <>
